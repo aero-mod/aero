@@ -17,6 +17,10 @@ import fs from "fs";
 const dirname = path.dirname(new URL(import.meta.url).pathname);
 
 if (!fs.existsSync(path.join(dirname, "dist", "package.json"))) {
+    if (!fs.existsSync(path.join(dirname, "dist"))) {
+        fs.mkdirSync(path.join(dirname, "dist"));
+    }
+
     fs.writeFileSync(
         path.join(dirname, "dist", "package.json"),
         JSON.stringify({
