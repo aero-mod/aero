@@ -42,7 +42,7 @@ export const known = {
             "/usr/share/discord/resources/",
             "/usr/lib/discord/resources/",
             "/usr/opt/discord/resources/",
-            "/opt/discord-stable/resouces",
+            "/opt/discord/resources",
         ],
         canary: [
             path.join(os.homedir(), ".config", "discordcanary"),
