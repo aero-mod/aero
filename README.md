@@ -1,12 +1,12 @@
 <div align="center">
     <img src="./assets/Transparent.png" width="150px" height="150px" alt="Aero Logo" />
-    <hr />
+    <h1>Aero</h1>
     A next-generation Discord mod empowering users and developers alike.
 </div>
 
-## Aero
+---
 
-A discord client mod built to bridge the gap between existing options and the spiritual successor to [Velocity](https://github.com/Velocity-Discord/Velocity).
+The spiritual successor to [Velocity](https://github.com/Velocity-Discord/Velocity).
 
 ## License Information
 
