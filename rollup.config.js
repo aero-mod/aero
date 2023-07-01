@@ -11,7 +11,20 @@ import json from "@rollup/plugin-json";
 import scss from "rollup-plugin-scss";
 import swc from "@rollup/plugin-swc";
 
+import path from "path";
 import fs from "fs";
+
+const dirname = path.dirname(new URL(import.meta.url).pathname);
+
+if (!fs.existsSync(path.join(dirname, "dist", "package.json"))) {
+    fs.writeFileSync(
+        path.join(dirname, "dist", "package.json"),
+        JSON.stringify({
+            module: "commonjs",
+            main: "./main.js",
+        })
+    );
+}
 
 const isProduction = process.env.ROLLUP_WATCH !== "true";
 

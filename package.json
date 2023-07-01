@@ -6,6 +6,7 @@
     "license": "GPL-3.0-or-later",
     "author": "TheCommieAxolotl",
     "main": "dist/index.js",
+    "packageManager": "pnpm@7.29.1",
     "scripts": {
         "build": "rollup -c",
         "build:preview": "rollup -c --preview",
