@@ -28,7 +28,7 @@ jobs:
             - run: pnpm build
 
             - name: "asar-ify"
-              run: asar pack dist/ dist/aero.asar
+              run: pnpx asar pack dist/ dist/aero.asar
 
             - name: "Find Hash"
               id: hash
