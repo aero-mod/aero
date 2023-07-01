@@ -42,18 +42,21 @@ export const known = {
             "/usr/share/discord/resources/",
             "/usr/lib/discord/resources/",
             "/usr/opt/discord/resources/",
+            "/opt/discord-stable/resouces",
         ],
         canary: [
             path.join(os.homedir(), ".config", "discordcanary"),
             "/usr/share/discordcanary/resources/",
             "/usr/lib/discordcanary/resources/",
             "/usr/opt/discordcanary/resources/",
+            "/opt/discord-canary/resources",
         ],
         ptb: [
             path.join(os.homedir(), ".config", "discordptb"),
             "/usr/share/discordptb/resources/",
             "/usr/lib/discordptb/resources/",
             "/usr/opt/discordptb/resources/",
+            "/opt/discord-ptb/resources",
         ],
     },
 };
