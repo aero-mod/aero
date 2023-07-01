@@ -8,7 +8,7 @@ A plugin (as of `v0.0.0`) is a single-file module that can control, modify, and 
 
 # Getting started & Structure.
 
-We're going to assume you're creating your plugin directly from the `/aero/plugins` directory. **This is not reccommended**, but it's the easiest way to get started with the pre-bundled typedefs.
+We're going to assume you're creating your plugin directly from the `/aero/plugins` directory. **This is not recommended**, but it's the easiest way to get started with the pre-bundled typedefs.
 
 Aero uses custom modules to let you write cleaner code. All plugins are transpiled at runtime so you can write in ts or tsx. The only requirement is that your plugin exports a default object that adheres to the structure we'll show you later on.
 
