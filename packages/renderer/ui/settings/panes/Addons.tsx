@@ -36,6 +36,7 @@ import FormTitle from "../../components/FormTitle";
 import AddonCard from "../../components/AddonCard";
 import TextInput from "../../components/TextInput";
 import Folder from "../../components/Icons/Folder";
+import Pencil from "../../components/Icons/Pencil";
 import Plus from "../../components/Icons/Plus";
 import Info from "../../components/Icons/Info";
 import Book from "../../components/Icons/Book";
@@ -203,7 +204,7 @@ export default () => {
                                     );
                                 }}
                             >
-                                <Plus />
+                                <Pencil />
                             </PanelButton>
                             <PanelButton
                                 tooltipText="Open Themes"
