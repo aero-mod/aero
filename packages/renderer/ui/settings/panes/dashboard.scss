@@ -1,0 +1,82 @@
+@keyframes fadeIn {
+    0% {
+        filter: grayscale(1) blur(10px);
+    }
+    100% {
+        filter: grayscale(var(--progress)) blur(var(--progress-px));
+    }
+}
+
+@keyframes growIn {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: var(--width);
+    }
+}
+
+#aero-dash {
+    .dash-banner {
+        background-color: var(--background-secondary-alt);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        color: var(--header-primary);
+        font-family: var(--font-display);
+        font-size: 18px;
+        font-weight: 400;
+        padding: 30px 20px;
+        background: linear-gradient(45deg, var(--brand-500), var(--brand-460));
+        display: flex;
+        gap: 100px;
+
+        .dash-banner-left {
+            flex-direction: column;
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            z-index: 3;
+        }
+
+        .dash-banner-right {
+            font-size: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            z-index: 3;
+        }
+
+        .dash-banner-count {
+            font-weight: 600;
+        }
+
+        .dash-banner-bar-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .dash-banner-bar {
+                width: 100%;
+                height: 12px;
+                background-color: var(--background-secondary-alt);
+                border-radius: var(--radius-lg);
+                overflow: hidden;
+
+                .dash-banner-bar-fill {
+                    animation: growIn 1s ease-in-out;
+                    height: 100%;
+                    width: var(--width);
+                    border-radius: var(--radius-lg);
+                    background-color: var(--white);
+                    transition: width 0.2s ease-in-out;
+                }
+            }
+
+            p {
+                margin: 0;
+                animation: fadeIn 1s ease-in-out;
+                filter: grayscale(var(--progress)) blur(var(--progress-px));
+            }
+        }
+    }
+}

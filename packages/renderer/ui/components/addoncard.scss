@@ -1,0 +1,84 @@
+.addon-card {
+    display: flex;
+    background: var(--background-secondary);
+    border-radius: var(--radius-md);
+    color: var(--text-normal);
+    overflow: hidden;
+
+    &.agent {
+        opacity: 0.5;
+    }
+
+    .addon-card-accent {
+        width: 6px;
+        background: var(--addon-accent, var(--text-muted));
+    }
+
+    .addon-card-inner {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .addon-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .addon-card-text {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .addon-card-switch {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        .addon-card-name {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .addon-card-description {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .addon-card-footer {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            opacity: 0.8;
+            padding-top: 5px;
+            margin-top: auto;
+            align-items: baseline;
+            justify-content: flex-end;
+
+            &:has(:nth-child(2)) {
+                justify-content: space-between;
+            }
+
+            .addon-card-patches {
+                text-transform: uppercase;
+                display: flex;
+                gap: 10px;
+                font-weight: 600;
+
+                .active {
+                    color: var(--text-positive);
+                }
+
+                .inactive {
+                    color: var(--text-warning);
+                }
+            }
+        }
+    }
+}

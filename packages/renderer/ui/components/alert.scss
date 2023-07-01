@@ -1,0 +1,37 @@
+.alert {
+    border-radius: var(--radius-md);
+    border: 1px solid;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &.alert-danger {
+        background-color: var(--info-danger-background);
+        border-color: var(--info-danger-foreground);
+        color: var(--info-danger-foreground);
+    }
+
+    &.alert-warning {
+        background-color: var(--info-warning-background);
+        border-color: var(--info-warning-foreground);
+        color: var(--info-warning-foreground);
+    }
+
+    &.alert-success {
+        background-color: var(--info-positive-background);
+        border-color: var(--info-positive-foreground);
+        color: var(--info-positive-foreground);
+    }
+
+    &.alert-brand {
+        background-color: var(--brand-500);
+        border-color: var(--aero-brand);
+        color: var(--aero-brand);
+    }
+
+    .header {
+        font-size: 18px;
+        font-weight: 600;
+    }
+}

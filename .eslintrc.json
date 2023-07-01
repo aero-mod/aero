@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json.schemastore.org/eslintrc",
+    "root": true,
+    "ignorePatterns": ["node_modules", "dist"],
+    "extends": ["plugin:@typescript-eslint/recommended", "prettier", "plugin:editorconfig/noconflict"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["header", "editorconfig", "path-alias", "unused-imports", "simple-import-sort", "@typescript-eslint"],
+    "settings": {
+        "import/resolver": {
+            "alias": {
+                "map": [["~/*", "./packages/*"]]
+            }
+        }
+    },
+    "rules": {
+        "quotes": ["error", "double", { "avoidEscape": true }],
+        "semi": ["error", "always"],
+        "no-console": "warn",
+        "header/header": [2, "HEADER.txt"]
+    }
+}

@@ -1,0 +1,64 @@
+/**
+
+    return (
+        <div className="input-wrapper">
+            <input
+                className="input"
+                placeholder={props.placeholder}
+                maxLength={props.maxLength}
+                type={props.type}
+                value={value}
+                onChange={(e) => {
+                    setValue(e.target.value);
+                    props.onChange(e.target.value);
+                }}
+            />
+        </div>
+    );
+*/
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .input {
+        padding: 10px;
+        height: 40px;
+        font-size: 16px;
+        box-sizing: border-box;
+        width: 100%;
+        border-radius: 3px;
+        color: var(--text-normal);
+        background-color: var(--input-background);
+        border: none;
+        transition: border-color 0.2s ease-in-out;
+    }
+}
+
+textarea.textarea {
+    padding: 10px;
+    height: 200px;
+    font-size: 16px;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 3px;
+    color: var(--text-normal);
+    background-color: var(--input-background);
+    border: none;
+    transition: border-color 0.2s ease-in-out;
+    resize: vertical;
+    min-height: 100px;
+    max-height: 500px;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--scrollbar-thin-track);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(----scrollbar-thin-thumb);
+    }
+}

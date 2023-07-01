@@ -1,0 +1,56 @@
+.form-title {
+    color: var(--header-primary);
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &.nomargin {
+        margin: 0 !important;
+    }
+
+    &.h1,
+    &.h2 {
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    &.h3,
+    &.h4,
+    &.h5,
+    &.h6 {
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        color: var(--text-muted);
+    }
+
+    &.h1 {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    &.h2 {
+        font-size: 16px;
+        line-height: 20px;
+        text-transform: uppercase;
+    }
+
+    &.h3 {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    &.h4 {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    &.h5 {
+        font-size: 10px;
+        line-height: 14px;
+    }
+}

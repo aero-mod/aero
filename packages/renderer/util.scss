@@ -1,0 +1,54 @@
+:root {
+    --aero-brand: #6388e5;
+}
+
+.text-normal {
+    color: var(--text-normal);
+    font-weight: 400;
+    line-height: 20px;
+    font-size: 16px;
+}
+
+@function level($level) {
+    @return $level * 10px;
+}
+
+@for $i from 0 through 10 {
+    .mt-#{$i} {
+        margin-top: level($i);
+    }
+
+    .mb-#{$i} {
+        margin-bottom: level($i);
+    }
+
+    .ml-#{$i} {
+        margin-left: level($i);
+    }
+
+    .mr-#{$i} {
+        margin-right: level($i);
+    }
+}
+
+.icon {
+    color: inherit;
+}
+
+code {
+    &.inline {
+        padding: 4px;
+        background-color: var(--background-secondary-alt);
+        border-radius: 4px;
+        font-size: 12px;
+    }
+}
+
+.aero-infoVersion {
+    color: var(--interactive-normal);
+    transition: color 0.15s ease;
+
+    &:hover {
+        color: var(--aero-brand);
+    }
+}

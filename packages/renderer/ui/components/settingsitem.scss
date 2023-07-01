@@ -1,0 +1,34 @@
+.settings-item {
+    display: flex;
+    gap: 40px;
+    padding-bottom: 20px;
+    margin-block: 20px;
+    border-bottom: thin solid var(--background-modifier-accent);
+
+    .settings-item-text {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+
+        .settings-item-title {
+            display: block;
+            overflow: hidden;
+            margin-top: 0;
+            margin-bottom: 0;
+            color: var(--header-primary);
+            line-height: 24px;
+            font-size: 16px;
+            font-weight: 500;
+            word-wrap: break-word;
+            cursor: pointer;
+        }
+
+        .settings-item-note {
+            color: var(--header-secondary);
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 400;
+        }
+    }
+}

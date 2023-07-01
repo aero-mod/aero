@@ -1,0 +1,39 @@
+.docs-page {
+    color: var(--text-normal);
+    padding: 4rem;
+    user-select: text;
+    position: relative;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+
+        &-track {
+            background: var(--scrollbar-auto-track);
+        }
+
+        &-thumb {
+            background: var(--scrollbar-auto-thumb);
+            border-radius: 10px;
+        }
+    }
+
+    .absolute-close-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding-right: 4rem;
+        padding-top: 4rem;
+    }
+
+    > * {
+        max-width: min(100%, 60rem);
+    }
+
+    h1:first-of-type {
+        font-size: 4rem;
+        line-height: 1;
+        font-weight: 800;
+        font-family: var(--font-headline);
+    }
+}

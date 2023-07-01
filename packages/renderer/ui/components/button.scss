@@ -1,0 +1,128 @@
+.button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    background: none;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    user-select: none;
+    cursor: pointer;
+
+    &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    &.look-filled {
+        transition: background-color 0.17s ease, color 0.17s ease;
+        background-color: var(--brand-500);
+        color: var(--white);
+
+        &.color-brand {
+            background-color: var(--brand-500);
+            color: var(--white);
+
+            &:hover {
+                background-color: var(--brand-experiment-560);
+            }
+        }
+
+        &.color-primary {
+            background-color: var(--primary-500);
+            color: var(--white);
+
+            &:hover {
+                background-color: var(--primary-560);
+            }
+        }
+
+        &.color-white {
+            color: var(--primary-500);
+            background-color: var(--white-500);
+        }
+
+        &.color-red {
+            color: var(--white-500);
+            background-color: var(--button-danger-background);
+
+            &:hover {
+                background-color: var(--button-danger-background-hover);
+            }
+        }
+
+        &.color-green {
+            color: var(--white-500);
+            background-color: var(--button-success-background);
+
+            &:hover {
+                background-color: var(--button-success-background-hover);
+            }
+        }
+
+        &.color-yellow {
+            color: var(--white-500);
+            background-color: var(--status-warning);
+        }
+    }
+
+    &.look-link {
+        background-color: transparent;
+        color: var(--header-primary);
+
+        &:hover {
+            .contents {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &.look-outlined {
+        background-color: transparent;
+        color: var(--header-primary);
+        border: 1px solid var(--header-primary);
+    }
+
+    &.size-tiny {
+        height: 24px;
+        min-width: 52px;
+        min-height: 24px;
+    }
+
+    &.size-small {
+        height: 32px;
+        min-width: 60px;
+        min-height: 32px;
+    }
+
+    &.size-medium {
+        height: 38px;
+        min-width: 96px;
+        min-height: 38px;
+    }
+
+    &.size-large {
+        height: 44px;
+        min-width: 130px;
+        min-height: 44px;
+    }
+
+    &.look-filled .contents,
+    &.look-inverted .contents,
+    &.look-link .contents,
+    &.look-outlined .contents {
+        margin: 0 auto;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    &.fullwidth {
+        width: 100%;
+    }
+}

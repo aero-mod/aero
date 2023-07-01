@@ -1,0 +1,58 @@
+.error-boundary {
+    height: 100%;
+    width: 100%;
+    background: var(--info-danger-background);
+    color: var(--info-danger-foreground);
+    border: 1px solid var(--info-danger-foreground);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+
+    .heading {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .error-boundary-text {
+        font-size: 16px;
+        max-width: 500px;
+    }
+
+    .button-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 1rem;
+    }
+
+    code {
+        width: 100%;
+        background: var(--background-secondary);
+        padding: 10px;
+        border-radius: var(--radius-sm);
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-auto-thumb);
+            border: 2px solid var(--scrollbar-auto-track);
+            border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: var(--scrollbar-auto-track);
+            border-radius: 4px;
+        }
+
+        pre {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+    }
+}

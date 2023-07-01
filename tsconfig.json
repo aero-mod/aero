@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "jsxFactory": "window.aero.webpack.common.React.createElement",
+        "jsxFragmentFactory": "window.aero.webpack.common.React.Fragment",
+        "target": "ESNext",
+        "module": "ESNext",
+        "lib": ["ESNext", "DOM"],
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "paths": {
+            "~/*": ["./packages/*"],
+            "~content/*": ["./*"]
+        }
+    }
+}
