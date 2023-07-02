@@ -158,7 +158,7 @@ export const pluginSettings = (pluginID: string) => {
 };
 
 export default async () => {
-    const external = loadExternalPlugins();
+    const external = await loadExternalPlugins();
 
     for (const plugin of external) {
         registerPlugin(plugin);
