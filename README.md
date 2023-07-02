@@ -8,6 +8,7 @@
 ![aero](https://img.shields.io/badge/-aero-blue?style=flat-square&color=%236B87DE)
 ![Repo Stars](https://img.shields.io/github/stars/aero-mod/aero?style=flat-square&color=%236B87DE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/aero-mod/aero/build?style=flat-square&color=%236B87DE)](https://github.com/aero-mod/aero/releases/tag/development)
+![Wakatime](https://wakatime.com/badge/user/00c7afe5-77ae-4122-9969-8fa677814618/project/4a921a8c-f97e-4fe3-9804-9b18ed5c3c4a.svg?style=flat-square)
 
 
 The spiritual successor to [Velocity](https://github.com/Velocity-Discord/Velocity).
