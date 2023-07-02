@@ -126,7 +126,7 @@ export const qol: AgentPlugin = {
                     match: '.foreground,"aria-hidden":!0})})]})}',
                     replace: `.foreground,"aria-hidden":!0})}), 
 window.aero.webpack.common.React.createElement("a", {
-    href: ${"''"},
+    href: "https://github.com/aero-mod",
     className: "aero-infoVersion",
     target: "_blank",
     rel: "noreferrer noopener"
