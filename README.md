@@ -5,6 +5,10 @@
 </div>
 
 ---
+![aero](https://img.shields.io/badge/-aero-blue?style=flat-square&color=%236B87DE)
+![Repo Stars](https://img.shields.io/github/stars/aero-mod/aero?style=flat-square&color=%236B87DE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/aero-mod/aero/build?style=flat-square&color=%236B87DE)](https://github.com/aero-mod/aero/releases/tag/development)
+
 
 The spiritual successor to [Velocity](https://github.com/Velocity-Discord/Velocity).
 
