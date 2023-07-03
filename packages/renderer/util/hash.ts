@@ -1,5 +1,7 @@
 import xxhash from "xxhash-wasm";
+
 const xxhashInstance = xxhash();
+let create64: Awaited<typeof xxhashInstance>["create64"];
 
 
 const fs = window.aeroNative.fileSystem;
@@ -10,7 +12,7 @@ export async function hashDir(path: string, ignoreDirs?: Set<string>, fileNameVa
     fileNameValidator ??= () => true;
     ignoreDirs ??= new Set();
 
-    const { create64 } = await xxhashInstance;
+    create64 ??= (await xxhashInstance).create64;
     const hash = create64();
 
     let didHash = false;
@@ -40,7 +42,7 @@ export async function hashFile(path: string) {
     if (!fs.exists(path)) throw new Error(`File not found: ${path}`);
     if (!fs.isFile(path)) throw new Error(`Path is not a file: ${path}`);
 
-    const { create64 } = await xxhashInstance;
+    create64 ??= (await xxhashInstance).create64;
 
     return create64().update(fs.readFile(path)).digest().toString(16);
 }
