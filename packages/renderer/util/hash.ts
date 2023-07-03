@@ -21,7 +21,6 @@ import xxhash from "xxhash-wasm";
 const xxhashInstance = xxhash();
 let create64: Awaited<typeof xxhashInstance>["create64"];
 
-
 const fs = window.aeroNative.fileSystem;
 
 export async function hashDir(path: string, ignoreDirs?: Set<string>, fileNameValidator?: (name: string) => boolean, recursive = true) {

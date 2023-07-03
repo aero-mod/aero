@@ -16,8 +16,8 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { hashDir, hashFile } from "~/renderer/util/hash";
 import logger from "~/common/logger";
+import { hashDir, hashFile } from "~/renderer/util/hash";
 import { originalConsole } from "~/renderer/util/polyfill";
 
 const fs = window.aeroNative.fileSystem;
@@ -52,7 +52,7 @@ return exports;
 
 const cachePath = "/data/.transpiled/plugins";
 const hashableFiletypes = new Set(["js", "jsx", "ts", "tsx", "sass", "scss"]);
-const ignoreDirs = new Set([".git", ".github", "node_modules", "assets"])
+const ignoreDirs = new Set([".git", ".github", "node_modules", "assets"]);
 const validPluginExtensions = new Set(["js", "jsx", "ts", "tsx"]);
 
 function findValidIndex(path: string) {
@@ -91,7 +91,7 @@ export const loadExternalPlugins = async () => {
 
             transpiledCache.set(file, parsed);
         } catch (e) {
-            console.error("Error trying to parse file:", e);
+            logger.error("Error trying to parse file:", e);
         }
     });
 
