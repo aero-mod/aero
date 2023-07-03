@@ -47,12 +47,12 @@ export class FileSystem {
         });
     }
 
-    #buildTree(basePath: string): Directory {
+    #buildTree(basePath: string, relativePath: string = "/"): Directory {
         const nodes = fs.readdirSync(basePath, { withFileTypes: true });
 
         const tree: Directory = {
             type: "directory",
-            relativePath: "/",
+            relativePath: relativePath,
             absolutePath: basePath,
             files: {},
             directories: {},
@@ -60,14 +60,16 @@ export class FileSystem {
         };
 
         for (const node of nodes) {
+            const nextBase = path.join(basePath, node.name),
+                nextRelative = path.join(relativePath, node.name);
             tree[node.isFile() ? "files" : "directories"][node.name] = node.isFile() ? {
                 type: "file",
-                relativePath: `/${node.name}`,
-                absolutePath: `${basePath}/${node.name}`,
-                content: fs.readFileSync(`${basePath}/${node.name}`, "utf8"),
+                relativePath: nextRelative,
+                absolutePath: nextBase,
+                content: fs.readFileSync(nextBase, "utf8"),
                 filename: node.name,
                 extension: node.name.split(".").pop(),
-            } : this.#buildTree(path.join(basePath, node.name));
+            } : this.#buildTree(nextBase, nextRelative);
         }
 
         return tree;
@@ -91,7 +93,7 @@ export class FileSystem {
                     name: part,
                 };
 
-                fs.mkdirSync(currentDirectory.absolutePath);
+                fs.mkdirSync(path.join(currentDirectory.absolutePath, part));
             }
             currentDirectory = currentDirectory.directories[part];
         }

@@ -95,7 +95,7 @@ export const registerPlugin = (plugin: AeroPlugin) => {
 
     plugins[aeroPlugin.id] = aeroPlugin;
 
-    if (loadSettings().enabledAddons.plugins[aeroPlugin.id] || aeroPlugin["agent"]) {
+    if (loadSettings().enabledAddons?.plugins[aeroPlugin.id] || aeroPlugin["agent"]) {
         logger.debug(`Starting patches for ${aeroPlugin.name}`);
 
         if (plugin.patches) {
