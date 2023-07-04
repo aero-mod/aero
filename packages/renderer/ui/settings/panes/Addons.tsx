@@ -16,7 +16,7 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { showGeneric, showReloadDialog } from "~/renderer/api/notifications";
+import { showModal, showReloadDialog } from "~/renderer/api/notifications";
 import { OPEN_PLUGIN_DIRECTORY, OPEN_THEME_DIRECTORY } from "~/common/ipc";
 import { EnabledAddonStore, useStore } from "~/renderer/api/stores";
 import { React, components } from "~/renderer/api/webpack/common";
@@ -97,7 +97,7 @@ export default () => {
                             <PanelButton
                                 tooltipText="Add Remote Plugin"
                                 onClick={() => {
-                                    showGeneric(
+                                    showModal(
                                         (close) => (
                                             <>
                                                 <ModalHeader center>
@@ -166,7 +166,7 @@ export default () => {
                             <PanelButton
                                 tooltipText="Edit Theme URLs"
                                 onClick={() => {
-                                    showGeneric(
+                                    showModal(
                                         (close) => (
                                             <>
                                                 <ModalHeader center>

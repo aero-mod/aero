@@ -17,6 +17,7 @@
  */
 
 import { _MEGA_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "../webpack/common/components";
+import { ToastProps, registry, toastSetter } from "~/renderer/ui/components/Toast";
 import { ModalSize, ModalRoot } from "~/renderer/ui/components/Modal";
 import Generic from "./Generic";
 
@@ -46,7 +47,7 @@ export const showReloadDialog = () => {
     ));
 };
 
-export const showGeneric = (children: (onClose: () => void) => React.ReactNode, size?: ModalSize) => {
+export const showModal = (children: (onClose: () => void) => React.ReactNode, size?: ModalSize) => {
     _MEGA_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.openModal((props: { onClose: () => void; [key: string]: unknown }) => (
         <_MEGA_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Dialog
             className="focus-lock"
@@ -58,4 +59,38 @@ export const showGeneric = (children: (onClose: () => void) => React.ReactNode, 
             </ModalRoot>
         </_MEGA_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Dialog>
     ));
+};
+
+const toasts = new Map<number, ToastProps>();
+
+let i = 0;
+
+export const showToast = (props: ToastProps) => {
+    toasts.set(i++, props);
+
+    if (toastSetter) {
+        toastSetter((prev) => [
+            ...prev,
+            {
+                ...props,
+                id: i - 1,
+            },
+        ]);
+    }
+
+    return i - 1;
+};
+
+export const removeToast = (id: number) => {
+    registry.get(id)?.(true);
+
+    setTimeout(() => {
+        toasts.delete(id);
+
+        if (toastSetter) {
+            toastSetter((prev) => prev.filter((t) => t.id !== id));
+
+            // FIXME: somehow this also removes the last toast in the list?
+        }
+    }, 1000);
 };

@@ -18,6 +18,7 @@
 
 import { waitFor } from "../webpack";
 
+export let ReactSpring: typeof import("react-spring");
 export let ReactDOM: typeof import("react-dom");
 export let React: typeof import("react");
 
@@ -27,4 +28,10 @@ waitFor(["findDOMNode"], false).then((md) => {
 
 waitFor(["useState"], false).then((md) => {
     React = md;
+});
+
+waitFor(["useSpring"], false).then((md) => {
+    ReactSpring = md;
+
+    window.aero.notifications._initialiseToasts();
 });

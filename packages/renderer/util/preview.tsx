@@ -16,7 +16,7 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { showGeneric } from "../api/notifications";
+import { showModal } from "../api/notifications";
 import { getModule } from "../api/webpack";
 import markdown from "./markdown";
 import { sleep } from "./time";
@@ -29,7 +29,7 @@ export default async () => {
     await sleep(10000);
 
     if (window.aeroNative.channel === "preview")
-        showGeneric(
+        showModal(
             (close) => (
                 <>
                     <ModalHeader center>

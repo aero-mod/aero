@@ -18,6 +18,8 @@
 
 import { Filters, getModule, waitFor, globalPromise, common, __webpack_require__ } from "./api/webpack";
 import { openDocumentationPageWithString, openByName } from "./api/docs";
+import { showModal, showToast, removeToast } from "./api/notifications";
+import { initialise } from "./ui/components/Toast";
 import * as components from "./ui/components";
 import * as menu from "./api/patcher/menu";
 import { plugins } from "./api/plugins";
@@ -28,11 +30,20 @@ import * as dom from "./api/dom";
 
 export default {
     settings: proxy,
+    dom,
+    patcher,
+    components,
     plugins,
     themes,
     docs: {
-        openDocumentationPageWithString,
         openByName,
+        openDocumentationPageWithString,
+    },
+    notifications: {
+        showModal,
+        showToast,
+        removeToast,
+        _initialiseToasts: initialise,
     },
     contextMenu: {
         patch: menu.patch,
@@ -49,7 +60,4 @@ export default {
             return __webpack_require__;
         },
     },
-    dom,
-    patcher,
-    components,
 };
