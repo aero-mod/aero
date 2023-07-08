@@ -91,7 +91,7 @@ export const remapDefaults = () => {
 };
 
 export const getModule = (
-    filter: string[] | string | ((ele: unknown) => boolean | string),
+    filter: string[] | string | ((ele: unknown, id: number) => boolean | string),
     returnDefault = true,
     all = false
 ) => {
@@ -124,7 +124,7 @@ export const getModule = (
         }
 
         try {
-            const result = filter(ele);
+            const result = filter(ele, Number(ite));
 
             if (result) {
                 if (typeof result === "string") {
@@ -148,7 +148,7 @@ export const getModule = (
 };
 
 export const waitFor = async (
-    filter: string[] | string | ((ele: unknown) => boolean | string),
+    filter: string[] | string | ((ele: unknown, id: number) => boolean | string),
     returnDefault = true,
     all = false
 ) => {
