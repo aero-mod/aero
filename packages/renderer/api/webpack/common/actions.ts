@@ -17,10 +17,9 @@
  */
 
 import { Message } from "discord-types/general";
+
 import type { ReactNode } from "react";
-
 import { waitFor } from "../webpack";
-
 import { Dispatcher } from "./misc";
 
 export let MessageActions: {
