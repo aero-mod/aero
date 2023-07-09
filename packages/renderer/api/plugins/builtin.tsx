@@ -195,3 +195,78 @@ export const doNotTrack: AgentPlugin = {
         },
     ],
 };
+
+const loadingTextSettings = pluginSettings("aero_loadingText");
+
+const ARR = [
+    "Crabs quickly learn to avoid painful experiences",
+    "If Aero breaks, blame Kevin",
+    "You've opened Discord at least one time today",
+];
+
+export const loadingText: AgentPlugin = {
+    color: "var(--aero-brand)",
+    builtin: true,
+    id: "aero_loadingText",
+    name: "Loading Text",
+    description: "Changes the text that appears on the loading screen.",
+    settings: [
+        {
+            id: "showText",
+            name: "Change Text",
+            description: "Change the text that appears on the loading screen.",
+            type: SettingsItemType.BOOLEAN,
+            initialValue: true,
+        },
+        {
+            id: "showTitle",
+            name: "Change Title",
+            description: "Changes the 'Did you know' text to show your version of Aero.",
+            type: SettingsItemType.BOOLEAN,
+            initialValue: true,
+        },
+        {
+            id: "customText",
+            name: "Custom Text",
+            description: "Custom text to show on the loading screen.",
+            type: SettingsItemType.STRING,
+        },
+    ],
+    author: {
+        name: "TheCommieAxolotl",
+        id: "538487970408300544",
+    },
+    self: {
+        provideText(old: string) {
+            if (loadingTextSettings["customText"]) return loadingTextSettings["customText"];
+
+            if (!loadingTextSettings["showText"]) return old;
+
+            const r = Math.floor(Math.random() * ARR.length);
+
+            return ARR[r];
+        },
+    },
+    patches: [
+        {
+            find: "this._loadingText,",
+            replacement: [
+                {
+                    match: "this._loadingText,",
+                    replace: "$self.provideText(),",
+                },
+            ],
+        },
+        {
+            find: ".Messages.LOADING_DID_YOU_KNOW",
+            replacement: {
+                match: /(\w{1,2}\.\w{1,2}\.Messages\.LOADING_DID_YOU_KNOW)/,
+                replace: !loadingTextSettings["showTitle"]
+                    ? `"Aero ${window.aeroNative.version}${
+                          window.aeroNative.channel !== "production" ? ` (${window.aeroNative.channel})` : ""
+                      }"`
+                    : "$1",
+            },
+        },
+    ],
+};
