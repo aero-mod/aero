@@ -21,9 +21,10 @@ import { React } from "~/renderer/api/webpack/common";
 import "./textinput.scss";
 
 type TextInputProps = {
+    id?: string;
     type: string;
-    value: string;
-    onChange: (value: string) => void;
+    value: string | number;
+    onChange: (value: string | number) => void;
     placeholder?: string;
     disabled?: boolean;
     className?: string;
@@ -37,6 +38,7 @@ export default (props: TextInputProps) => {
     return (
         <div className="input-wrapper">
             <input
+                id={props.id}
                 className="input"
                 placeholder={props.placeholder}
                 maxLength={props.maxLength}

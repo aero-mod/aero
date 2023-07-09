@@ -31,17 +31,24 @@ export type Patch = {
     _active?: boolean;
 };
 
-export enum SettingsItemTypes {
+export enum SettingsItemType {
     BOOLEAN = "boolean",
     NUMBER = "number",
     STRING = "string",
 }
 
-type SettingsOption = {
+export type SettingsOption<T = SettingsItemType> = {
     id: string;
     name: string;
     description: string;
-    type: SettingsItemTypes;
+    initialValue?: T extends SettingsItemType.BOOLEAN
+        ? boolean
+        : T extends SettingsItemType.NUMBER
+        ? number
+        : T extends SettingsItemType.STRING
+        ? string
+        : never;
+    type: T;
 };
 
 export type Author<T = string> = {
@@ -53,9 +60,9 @@ export type Plugin = {
     id: string;
     name: string;
     description: string;
-    settings?: SettingsOption[];
     author: Author | Author[];
     dependencies?: string[];
+    settings?: SettingsOption[];
     self?: Record<string, unknown>;
     patches?: Patch[];
     start?(): void;

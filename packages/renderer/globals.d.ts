@@ -71,7 +71,7 @@ declare global {
             ? {
                   definePlugin: typeof import("~/renderer/api/plugins/types").definePlugin;
                   defineVencordPlugin: typeof import("~/renderer/api/plugins/types").defineVencordPlugin;
-                  SettingsItemTypes: typeof import("~/renderer/api/plugins/types").SettingsItemTypes;
+                  SettingsItemType: typeof import("~/renderer/api/plugins/types").SettingsItemType;
               }
             : never;
         webpackChunkdiscord_app: any;

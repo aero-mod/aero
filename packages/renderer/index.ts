@@ -18,7 +18,7 @@
 
 import { globalPromise } from "./api/webpack";
 
-import { definePlugin, defineVencordPlugin, SettingsItemTypes } from "./api/plugins/types";
+import { definePlugin, defineVencordPlugin, SettingsItemType } from "./api/plugins/types";
 import plugins, { injectBuiltin, pluginSettings } from "./api/plugins";
 import polyfill, { localStorage } from "./util/polyfill";
 import { defineTheme } from "./api/themes/types";
@@ -57,7 +57,7 @@ window.require = (id: string) => {
                 definePlugin,
                 defineVencordPlugin,
                 pluginSettings,
-                SettingsItemTypes,
+                SettingsItemType,
             };
         case "aero/webpack":
             return webpack;

@@ -18,9 +18,10 @@
 
 import { _MEGA_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "../webpack/common/components";
 import External from "~/renderer/ui/components/Icons/External";
+import { AgentPlugin, SettingsItemType } from "./types";
 import { OPEN_SNIPPET_DIRECTORY } from "~/common/ipc";
+import { pluginSettings } from "./settings";
 import { patch } from "../patcher/menu";
-import { AgentPlugin } from "./types";
 import { getModule } from "../webpack";
 
 export const contextMenu: AgentPlugin = {

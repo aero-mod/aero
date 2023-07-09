@@ -111,7 +111,7 @@ export default () => {
                                                         value={url}
                                                         type="text"
                                                         onChange={(value) => {
-                                                            setUrl(value);
+                                                            setUrl(value as string);
                                                         }}
                                                     />
                                                 </ModalContent>

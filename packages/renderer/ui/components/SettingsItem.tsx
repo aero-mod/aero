@@ -18,6 +18,7 @@
 
 import markdown from "../../util/markdown";
 
+import TextInput from "./TextInput";
 import Switch from "./Switch";
 
 import "./settingsitem.scss";
@@ -34,8 +35,8 @@ type SettingsItemProps =
           type: "input";
           title: string;
           note?: string;
-          value: string;
-          onChange: (value: string) => void;
+          value: string | number;
+          onChange: (value: string | number) => void;
       };
 
 export default (props: SettingsItemProps) => {
@@ -53,10 +54,11 @@ export default (props: SettingsItemProps) => {
                 {props.type === "switch" ? (
                     <Switch id={`aero-settings-item-input-${randomID}`} value={props.value} onChange={props.onChange} />
                 ) : props.type === "input" ? (
-                    <input
+                    <TextInput
                         id={`aero-settings-item-input-${randomID}`}
+                        type="text"
                         value={props.value}
-                        onChange={(e) => props.onChange(e.target.value)}
+                        onChange={(e) => props.onChange(e)}
                     />
                 ) : null}
             </div>
