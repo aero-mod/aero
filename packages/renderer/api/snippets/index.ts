@@ -25,6 +25,9 @@ const fs = window.aeroNative.fileSystem;
 export const scripts = ["js", "jsx", "ts", "tsx"];
 export const styles = ["css", "scss", "sass"];
 
+export const isScript = (fileName: string) => scripts.some((ext) => fileName.endsWith(`.${ext}`));
+export const isStyle = (fileName: string) => styles.some((ext) => fileName.endsWith(`.${ext}`));
+
 export default () => {
     const snippetFiles = fs.readdir("/snippets");
 
@@ -60,6 +63,36 @@ export default () => {
                 injectCSSSnippet(snippetPath.split("/").pop(), outputText, sourceMap);
             }
         }
+    }
+};
+
+export const reapply = (fileName: string) => {
+    if (fileName.endsWith(".d.ts")) return;
+
+    const snippetPath = `/snippets/${fileName}`;
+
+    const file = fs.readFile(snippetPath);
+
+    const isScript = scripts.some((ext) => snippetPath.endsWith(`.${ext}`));
+
+    if (isScript === true) {
+        const { outputText } = window.aeroNative.external.transpile(file, snippetPath, {
+            module: 1, // CommonJS
+            target: 99, // ESNext
+            jsx: 2, // React
+            jsxFactory: "window.aero.webpack.common.React.createElement",
+            jsxFragmentFactory: "window.aero.webpack.common.React.Fragment",
+        });
+
+        wrapJSLike(snippetPath.split("/").pop(), outputText);
+    } else if (isScript === false) {
+        const { outputText, sourceMap } = window.aeroNative.external.transpileCSS(file, snippetPath);
+
+        const style = document.getElementById(`aero-s-${fileName.replace(/\W/g, "-")}`);
+
+        if (style) style.remove();
+
+        injectCSSSnippet(snippetPath.split("/").pop(), outputText, sourceMap);
     }
 };
 
