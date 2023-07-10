@@ -34,6 +34,9 @@ export const pluginSettings = (pluginID: string) => {
 
                 const parsed = JSON.parse(storage);
 
+                if (parsed[key] === undefined)
+                    return plugin.settings.find((setting) => setting.id === key)?.initialValue ?? null;
+
                 return parsed[key];
             },
             set(_, key: string, value: unknown) {
