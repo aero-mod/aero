@@ -107,18 +107,20 @@ export default (
                     <div className="addon-card-footer">
                         {plugin.patches?.length > 0 && (
                             <div className="addon-card-patches">
-                                <components.Tooltip
-                                    text={`${plugin.patches.filter((p) => p._active).length} Active Patch${
-                                        plugin.patches.filter((p) => p._active).length === 1 ? "" : "es"
-                                    }`}
-                                >
-                                    {(props) => (
-                                        <div {...props} className="active">
-                                            {plugin.patches.filter((p) => p._active).length} Active
-                                        </div>
-                                    )}
-                                </components.Tooltip>
-                                {plugin.patches.filter((p) => !p._active).length > 0 ? (
+                                {plugin.patches.filter((p) => p._active).length > 0 && (
+                                    <components.Tooltip
+                                        text={`${plugin.patches.filter((p) => p._active).length} Active Patch${
+                                            plugin.patches.filter((p) => p._active).length === 1 ? "" : "es"
+                                        }`}
+                                    >
+                                        {(props) => (
+                                            <div {...props} className="active">
+                                                {plugin.patches.filter((p) => p._active).length} Active
+                                            </div>
+                                        )}
+                                    </components.Tooltip>
+                                )}
+                                {plugin.patches.filter((p) => !p._active).length > 0 && (
                                     <components.Tooltip
                                         text={`${plugin.patches.filter((p) => !p._active).length} Inactive Patch${
                                             plugin.patches.filter((p) => !p._active).length === 1 ? "" : "es"
@@ -130,8 +132,6 @@ export default (
                                             </div>
                                         )}
                                     </components.Tooltip>
-                                ) : (
-                                    <></>
                                 )}
                             </div>
                         )}
