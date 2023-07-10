@@ -17,7 +17,7 @@
  */
 
 import { AeroPlugin, Author } from "~/renderer/api/plugins/types";
-import { React, components } from "~/renderer/api/webpack/common";
+import { components } from "~/renderer/api/webpack/common";
 import { showModal } from "~/renderer/api/notifications";
 import buildSettings from "../settings/buildSettings";
 import { Theme } from "~/renderer/api/themes/types";
