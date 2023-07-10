@@ -94,6 +94,33 @@ export class FileSystem {
         return file;
     }
 
+    deleteFile(relativePath: string) {
+        const pathParts = relativePath
+            .split("/")
+            .filter((p) => p !== "")
+            .slice(0, -1);
+
+        let currentDirectory = this.tree;
+
+        for (const part of pathParts) {
+            const directory = currentDirectory.directories.find((d) => d.name === part);
+
+            if (!directory) return false;
+
+            currentDirectory = directory;
+        }
+
+        const fileIndex = currentDirectory.files.findIndex((f) => f.filename === relativePath.split("/").pop());
+
+        if (fileIndex === -1) return false;
+
+        currentDirectory.files.splice(fileIndex, 1);
+
+        fs.unlinkSync(path.join(currentDirectory.absolutePath, relativePath.split("/").pop()));
+
+        return true;
+    }
+
     writeFile(relativePath: string, content: string) {
         const existingFile = this.getFile(relativePath);
 
@@ -237,6 +264,18 @@ export const makeFs = (fileSystem: FileSystem) => {
 
             return fileSystem.createDirectory(path);
         },
+        writeFile: (path: string, content: string) => {
+            if (path.includes("../")) throw new Error(`Invalid path: ${path}`);
+            if (path.includes("..\\")) throw new Error(`Invalid path: ${path}`);
+
+            return fileSystem.writeFile(path, content);
+        },
+        unlink: (path: string) => {
+            if (path.includes("../")) throw new Error(`Invalid path: ${path}`);
+            if (path.includes("..\\")) throw new Error(`Invalid path: ${path}`);
+
+            return fileSystem.deleteFile(path);
+        },
         exists: (path: string) => {
             const file = fileSystem.getFile(path);
             const directory = fileSystem.getDirectory(path);
@@ -244,6 +283,9 @@ export const makeFs = (fileSystem: FileSystem) => {
             return !!file || !!directory;
         },
         path: {
+            extname: (path: string) => {
+                return path.split(".").pop();
+            },
             join: (...paths: string[]) => {
                 return path.join(...paths);
             },
