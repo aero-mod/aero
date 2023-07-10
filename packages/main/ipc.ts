@@ -49,4 +49,10 @@ export default () => {
     ipcMain.handle(ipc.OPEN_DATA_DIRECTORY, () => {
         shell.openPath(path.join(dataDirectory, "data"));
     });
+
+    ipcMain.handle(ipc.OPEN_FILE, (_, p: string) => {
+        if (p.includes("..")) return;
+
+        shell.openPath(path.join(dataDirectory, p));
+    });
 };
