@@ -204,6 +204,9 @@ const ARR = [
     "You've opened Discord at least one time today",
 ];
 
+// different on each startup, but stays the same during the session
+const r = Math.floor(Math.random() * ARR.length);
+
 export const loadingText: AgentPlugin = {
     color: "var(--aero-brand)",
     builtin: true,
@@ -241,8 +244,6 @@ export const loadingText: AgentPlugin = {
             if (loadingTextSettings["customText"]) return loadingTextSettings["customText"];
 
             if (!loadingTextSettings["showText"]) return old;
-
-            const r = Math.floor(Math.random() * ARR.length);
 
             return ARR[r];
         },
