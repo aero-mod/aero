@@ -28,10 +28,10 @@ import "./dashboard.scss";
 import { showReloadDialog } from "~/renderer/api/notifications";
 
 const milestone = (nextorLast: 1 | -1, count: number) => {
-    const milestones = [0, 50, 100, 500, 1000];
+    const milestones = [0, 50, 100, 500, 1000, 2000];
 
     if (nextorLast === 1) {
-        return milestones.find((milestone) => milestone > count) || 1000;
+        return milestones.find((milestone) => milestone > count) || 2000;
     } else {
         return (
             milestones
