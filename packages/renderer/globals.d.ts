@@ -73,6 +73,8 @@ declare global {
                   defineVencordPlugin: typeof import("~/renderer/api/plugins/types").defineVencordPlugin;
                   SettingsItemType: typeof import("~/renderer/api/plugins/types").SettingsItemType;
               }
+            : "aero/badges" extends T
+            ? typeof import("~/renderer/api/attachments/badges")
             : never;
         webpackChunkdiscord_app: any;
         aero: typeof import("~/renderer/aero").default;
