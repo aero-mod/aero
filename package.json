@@ -1,6 +1,6 @@
 {
     "name": "aero",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "A next-generation Discord mod empowering users and developers alike.",
     "type": "module",
     "license": "GPL-3.0-or-later",
@@ -44,6 +44,7 @@
         "prettier": "^2.8.8",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-spring": "^9.7.2",
         "rollup": "^3.24.0",
         "rollup-plugin-scss": "^4.0.0",
         "sass": "^1.63.3",

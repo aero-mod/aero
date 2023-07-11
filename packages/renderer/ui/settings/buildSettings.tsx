@@ -17,14 +17,16 @@
  */
 
 import { AeroPlugin } from "~/renderer/api/plugins/types";
-import { SettingsItem } from "../components";
 import { pluginSettings } from "~/renderer/api/plugins";
 import { React } from "~/renderer/api/webpack/common";
+import { SettingsItem } from "../components";
 
 const Item = (props: { setting: AeroPlugin["settings"][number]; settings: ProxyHandler<Record<string, unknown>> }) => {
     const type = props.setting.type === "boolean" ? "switch" : "input";
 
-    const [value, setValue] = React.useState(props.settings[props.setting.id]);
+    const [value, setValue] = React.useState(
+        props.settings[props.setting.id] || props.setting.initialValue || undefined
+    );
 
     return (
         <SettingsItem
@@ -32,7 +34,7 @@ const Item = (props: { setting: AeroPlugin["settings"][number]; settings: ProxyH
             title={props.setting.name}
             note={props.setting.description}
             value={value}
-            onChange={(val: string | boolean) => {
+            onChange={(val) => {
                 props.settings[props.setting.id] = val;
 
                 setValue(val);

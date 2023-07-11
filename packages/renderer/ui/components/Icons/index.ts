@@ -17,12 +17,17 @@
  */
 
 export { default as External } from "./External";
+export { default as Sparkle } from "./Sparkle";
 export { default as Folder } from "./Folder";
 export { default as Check } from "./Check";
 export { default as Cross } from "./Cross";
 export { default as Cloud } from "./Cloud";
+export { default as Heart } from "./Heart";
+export { default as File } from "./File";
 export { default as Copy } from "./Copy";
 export { default as Gear } from "./Gear";
+export { default as Play } from "./Play";
 export { default as Plus } from "./Plus";
 export { default as Book } from "./Book";
 export { default as Dev } from "./Dev";
+export { default as Eye } from "./Eye";

@@ -16,8 +16,10 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { sleep } from "~/renderer/util/time";
 import { waitFor } from "../webpack";
 
+export let ReactSpring: typeof import("react-spring");
 export let ReactDOM: typeof import("react-dom");
 export let React: typeof import("react");
 
@@ -27,4 +29,14 @@ waitFor(["findDOMNode"], false).then((md) => {
 
 waitFor(["useState"], false).then((md) => {
     React = md;
+});
+
+waitFor(["useSpring"], false).then(async (md) => {
+    ReactSpring = md;
+
+    while (!window.aero.notifications) {
+        await sleep(1);
+    }
+
+    window.aero.notifications._initialiseToasts();
 });

@@ -14,6 +14,13 @@
     user-select: none;
     cursor: pointer;
 
+    .contents {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
     &.disabled {
         opacity: 0.5;
         pointer-events: none;
@@ -82,10 +89,20 @@
         }
     }
 
-    &.look-outlined {
+    &.look-outline {
+        transition: border-color 0.17s ease, color 0.17s ease;
         background-color: transparent;
         color: var(--header-primary);
         border: 1px solid var(--header-primary);
+
+        &.color-primary {
+            border-color: var(--primary-500);
+            color: var(--white);
+
+            &:hover {
+                border-color: var(--header-primary);
+            }
+        }
     }
 
     &.size-tiny {

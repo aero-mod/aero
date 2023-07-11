@@ -65,6 +65,19 @@ export const ModalContent = (props: { className?: string; children: JSX.Element 
     return <div className={`modal-content ${props.className ?? ""}`}>{props.children}</div>;
 };
 
-export const ModalFooter = (props: { gap?: boolean; children: JSX.Element | JSX.Element[] }) => {
-    return <div className={`modal-footer ${props.gap ? "gap" : ""}`}>{props.children}</div>;
+export const ModalFooter = (props: {
+    transparent?: boolean;
+    center?: boolean;
+    gap?: boolean;
+    children: JSX.Element | JSX.Element[];
+}) => {
+    return (
+        <div
+            className={`modal-footer ${props.gap ? "gap" : ""} ${props.center ? "center" : ""} ${
+                props.transparent ? "transparent" : ""
+            }`}
+        >
+            {props.children}
+        </div>
+    );
 };

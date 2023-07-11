@@ -17,8 +17,8 @@
  */
 
 import { AeroPlugin, Author } from "~/renderer/api/plugins/types";
-import { React, components } from "~/renderer/api/webpack/common";
-import { showGeneric } from "~/renderer/api/notifications";
+import { components } from "~/renderer/api/webpack/common";
+import { showModal } from "~/renderer/api/notifications";
 import buildSettings from "../settings/buildSettings";
 import { Theme } from "~/renderer/api/themes/types";
 
@@ -84,7 +84,7 @@ export default (
                                         disabled={!props.enabled}
                                         tooltipText="Settings"
                                         onClick={() => {
-                                            showGeneric((close) => (
+                                            showModal((close) => (
                                                 <>
                                                     <ModalHeader separator>
                                                         <FormTitle nomargin level={1}>
@@ -107,18 +107,20 @@ export default (
                     <div className="addon-card-footer">
                         {plugin.patches?.length > 0 && (
                             <div className="addon-card-patches">
-                                <components.Tooltip
-                                    text={`${plugin.patches.filter((p) => p._active).length} Active Patch${
-                                        plugin.patches.filter((p) => p._active).length === 1 ? "" : "es"
-                                    }`}
-                                >
-                                    {(props) => (
-                                        <div {...props} className="active">
-                                            {plugin.patches.filter((p) => p._active).length} Active
-                                        </div>
-                                    )}
-                                </components.Tooltip>
-                                {plugin.patches.filter((p) => !p._active).length > 0 ? (
+                                {plugin.patches.filter((p) => p._active).length > 0 && (
+                                    <components.Tooltip
+                                        text={`${plugin.patches.filter((p) => p._active).length} Active Patch${
+                                            plugin.patches.filter((p) => p._active).length === 1 ? "" : "es"
+                                        }`}
+                                    >
+                                        {(props) => (
+                                            <div {...props} className="active">
+                                                {plugin.patches.filter((p) => p._active).length} Active
+                                            </div>
+                                        )}
+                                    </components.Tooltip>
+                                )}
+                                {plugin.patches.filter((p) => !p._active).length > 0 && (
                                     <components.Tooltip
                                         text={`${plugin.patches.filter((p) => !p._active).length} Inactive Patch${
                                             plugin.patches.filter((p) => !p._active).length === 1 ? "" : "es"
@@ -130,8 +132,6 @@ export default (
                                             </div>
                                         )}
                                     </components.Tooltip>
-                                ) : (
-                                    <></>
                                 )}
                             </div>
                         )}

@@ -16,6 +16,8 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { sleep } from "~/renderer/util/time";
+
 export * from "./elements";
 
 export const h = <T extends keyof HTMLElementTagNameMap>(
@@ -34,4 +36,26 @@ export const h = <T extends keyof HTMLElementTagNameMap>(
     element.append(children);
 
     return element;
+};
+
+export const esm = async (str: TemplateStringsArray) => {
+    const script = h("script");
+
+    const rand = (Math.random() * 100).toString(16).substring(7);
+
+    script.type = "module";
+    script.async = true;
+    script.innerHTML = `const $return = (val) => { window["${rand}"] = val; }; ${str}`;
+
+    document.body.appendChild(script);
+
+    while (!window.hasOwnProperty(rand)) {
+        await sleep(1);
+    }
+
+    const ret = window[rand];
+
+    delete window[rand];
+
+    return ret;
 };

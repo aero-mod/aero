@@ -18,9 +18,10 @@
 
 import { globalPromise } from "./api/webpack";
 
-import { definePlugin, defineVencordPlugin, SettingsItemTypes } from "./api/plugins/types";
+import { definePlugin, defineVencordPlugin, SettingsItemType } from "./api/plugins/types";
 import plugins, { injectBuiltin, pluginSettings } from "./api/plugins";
 import polyfill, { localStorage } from "./util/polyfill";
+import * as badges from "./api/attachments/badges";
 import { defineTheme } from "./api/themes/types";
 import * as components from "./ui/components";
 import previewBanner from "./util/preview";
@@ -52,12 +53,14 @@ window.require = (id: string) => {
             return aero;
         case "aero/dom":
             return dom;
+        case "aero/badges":
+            return badges;
         case "aero/plugin":
             return {
                 definePlugin,
                 defineVencordPlugin,
                 pluginSettings,
-                SettingsItemTypes,
+                SettingsItemType,
             };
         case "aero/webpack":
             return webpack;

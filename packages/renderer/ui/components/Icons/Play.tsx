@@ -16,27 +16,16 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { loadExternalPlugins } from "./external";
-export { pluginSettings } from "./settings";
-import { startPlugin } from "./actions";
-import * as builtin from "./builtin";
+import { IconProps, makeSvg } from "./base";
 
-export * from "./registry";
-
-import { registerPlugin } from "./registry";
-
-export default async () => {
-    const external = await loadExternalPlugins();
-
-    for (const plugin of external) {
-        registerPlugin(plugin);
-    }
-};
-
-export const injectBuiltin = () => {
-    for (const plugin of Object.values(builtin)) {
-        registerPlugin(plugin);
-
-        startPlugin(plugin);
-    }
+export default (props: IconProps) => {
+    return makeSvg(
+        [
+            "M6.01053 2.82974C5.01058 2.24153 3.75 2.96251 3.75 4.12264V13.8774C3.75 15.0375 5.01058 15.7585 6.01053 15.1703L14.3021 10.2929C15.288 9.71294 15.288 8.28709 14.3021 7.70711L6.01053 2.82974Z",
+        ],
+        "0 0 18 18",
+        props.size || 16,
+        props.fill,
+        props.stroke
+    );
 };

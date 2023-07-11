@@ -56,10 +56,10 @@ class Store<
 
 export const EnabledAddonStore = new Store<{
     themes: {
-        [key: Addon["id"]]: boolean;
+        [key: string]: boolean;
     };
     plugins: {
-        [key: Addon["id"]]: boolean;
+        [key: string]: boolean;
     };
 }>(() => {
     const data = settings.enabledAddons;

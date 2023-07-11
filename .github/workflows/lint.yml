@@ -2,14 +2,10 @@ name: Lint
 on:
     push:
         branches:
-            - main
-        paths:
-            - packages/**
-            - docs/**
-            - rollup.config.js
-            - package.json
-            - pnpm-lock.yaml
-            - .github/workflows/build.yml
+            - "*"
+    pull_request:
+        branches:
+            - "*"
 
 jobs:
     lint:
