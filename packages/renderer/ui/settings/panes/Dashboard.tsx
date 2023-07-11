@@ -16,16 +16,18 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { showReloadDialog } from "~/renderer/api/notifications";
 import useSettings from "~/renderer/api/settings/useSettings";
 import { components } from "~/renderer/api/webpack/common";
+import { localStorage } from "~/renderer/util/polyfill";
 import { Margin } from "~/renderer/util/classes";
 
+import Button, { ButtonColor, ButtonLook, ButtonSize } from "../../components/Button";
 import SettingsItem from "../../components/SettingsItem";
-import { localStorage } from "~/renderer/util/polyfill";
 import FormTitle from "../../components/FormTitle";
+import { Heart } from "../../components/Icons";
 
 import "./dashboard.scss";
-import { showReloadDialog } from "~/renderer/api/notifications";
 
 const milestone = (nextorLast: 1 | -1, count: number) => {
     const milestones = [0, 50, 100, 500, 1000, 2000];
@@ -158,6 +160,20 @@ export default () => {
                     "Sends debug logs to the console during runtime.\nThis is useful for debugging addons and themes."
                 }
             />
+            <footer className="dash-footer">
+                Please consider donating to Aero's development!
+                <Button
+                    color={ButtonColor.PRIMARY}
+                    look={ButtonLook.OUTLINE}
+                    size={ButtonSize.MEDIUM}
+                    onClick={() => {
+                        window.open("https://github.com/sponsors/TheCommieAxolotl");
+                    }}
+                >
+                    <Heart fill="#db61a2" />
+                    <span>Donate</span>
+                </Button>
+            </footer>
         </div>
     );
 };

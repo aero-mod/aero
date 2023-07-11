@@ -17,6 +17,10 @@
 }
 
 #aero-dash {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 80px);
+
     .dash-banner {
         background-color: var(--background-secondary-alt);
         border-radius: var(--radius-md);
@@ -78,5 +82,16 @@
                 filter: grayscale(var(--progress)) blur(var(--progress-px));
             }
         }
+    }
+
+    .dash-footer {
+        color: var(--text-muted);
+        margin-top: auto;
+        padding-block: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border-top: thin solid var(--background-modifier-accent);
     }
 }
