@@ -16,18 +16,14 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-export { default as External } from "./External";
-export { default as Sparkle } from "./Sparkle";
-export { default as Folder } from "./Folder";
-export { default as Check } from "./Check";
-export { default as Cross } from "./Cross";
-export { default as Cloud } from "./Cloud";
-export { default as Heart } from "./Heart";
-export { default as File } from "./File";
-export { default as Copy } from "./Copy";
-export { default as Gear } from "./Gear";
-export { default as Play } from "./Play";
-export { default as Plus } from "./Plus";
-export { default as Book } from "./Book";
-export { default as Dev } from "./Dev";
-export { default as Eye } from "./Eye";
+import { IconProps, makeSvg } from "./base";
+
+export default (props: IconProps) => {
+    return makeSvg(
+        ["M12 7.725C12.025-.722 23.022.577 23 9c-.017 6.875-11 13-11 13S1.08 15.875 1 9C.9.579 11.889-.722 12 7.725Z"],
+        "0 0 24 24",
+        props.size || 16,
+        props.fill,
+        props.stroke
+    );
+};
