@@ -35,6 +35,7 @@ specifiers:
   sass: ^1.63.3
   tslib: ^2.5.3
   typescript: ^4.9.5
+  xxhash-wasm: ^1.0.2
 
 dependencies:
   '@rollup/plugin-replace': 5.0.2_rollup@3.24.0
@@ -73,6 +74,7 @@ devDependencies:
   sass: 1.63.3
   tslib: 2.5.3
   typescript: 4.9.5
+  xxhash-wasm: 1.0.2
 
 packages:
 
@@ -2908,6 +2910,10 @@ packages:
 
   /wrappy/1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+    dev: true
+
+  /xxhash-wasm/1.0.2:
+    resolution: {integrity: sha512-ibF0Or+FivM9lNrg+HGJfVX8WJqgo+kCLDc4vx6xMeTce7Aj+DLttKbxxRR/gNLSAelRc1omAPlJ77N/Jem07A==}
     dev: true
 
   /yaku/0.16.7:
