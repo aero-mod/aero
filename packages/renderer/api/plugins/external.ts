@@ -16,6 +16,7 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { CompilerOptions } from "typescript";
 import logger from "~/common/logger";
 import { hashDir, hashFile } from "~/renderer/util/hash";
 import { originalConsole } from "~/renderer/util/polyfill";
@@ -63,16 +64,18 @@ function findValidIndex(path: string) {
     return null;
 }
 
+const compilerOptions: CompilerOptions = {
+    module: 1, // CommonJS
+    target: 99, // ESNext
+    jsx: 2, // React
+    sourceMap: true,
+    inlineSourceMap: true,
+    jsxFactory: "window.aero.webpack.common.React.createElement",
+    jsxFragmentFactory: "window.aero.webpack.common.React.Fragment",
+}
+
 function transpilePlugin(plugin, pluginName) {
-    return window.aeroNative.external.transpile(plugin, pluginName, {
-        module: 1, // CommonJS
-        target: 99, // ESNext
-        jsx: 2, // React
-        sourceMap: true,
-        inlineSourceMap: true,
-        jsxFactory: "window.aero.webpack.common.React.createElement",
-        jsxFragmentFactory: "window.aero.webpack.common.React.Fragment",
-    }).outputText;
+    return window.aeroNative.external.transpile(plugin, pluginName, compilerOptions).outputText;
 }
 
 export const loadExternalPlugins = async () => {
@@ -130,7 +133,7 @@ export const loadExternalPlugins = async () => {
 
         const hash = await hashDir(`/plugins/${pluginName}`, ignoreDirs, (name) => hashableFiletypes.has(name.split(".").pop()) || name === "package.json");
 
-        // TODO: load folder plugins?
+        window.aeroNative.external.transpileProgram(`/plugins/${pluginName}`, entrypoint.split("/").pop(), compilerOptions);
 
     }
 

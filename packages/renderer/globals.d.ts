@@ -41,6 +41,7 @@ export type AeroNative = {
             outputText: string;
             sourceMapText: string;
         };
+        transpileProgram: any;
         transpileCSS: (
             code: string,
             filePath: string

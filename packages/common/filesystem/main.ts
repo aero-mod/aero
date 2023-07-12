@@ -33,12 +33,17 @@ export class FileSystem {
         return this.#tree;
     }
 
-    constructor(basePath: string) {
-        this.#basePath = basePath;
+    constructor(base: string | Directory) {
+        if (typeof base === "string") {
+            this.#basePath = base;
 
-        this.#tree = this.#buildTree(basePath);
+            this.#tree = this.#buildTree(base);
 
-        this.attachListener(basePath);
+            this.attachListener(base);
+        } else {
+            this.#basePath = base.absolutePath;
+            this.#tree = base;
+        }
     }
 
     attachListener(basePath: string) {
@@ -160,6 +165,23 @@ export class FileSystem {
         fs.unlinkSync(sub[name].absolutePath);
         delete sub[name];
     }
+
+    subFs(relativePath: string) {
+        return new FileSystem(this.#walkPath(relativePath, true));
+    }
+
+    writeEphemeral(relativePath: string, content: string) {
+        const split = relativePath.split("/").filter((p) => p !== ""),
+            filename = split.pop();
+        this.#walkPath(split, true).files[filename] = {
+            type: "file",
+            relativePath,
+            absolutePath: path.join(this.#basePath, relativePath),
+            content,
+            filename,
+            extension: filename.split(".").pop(),
+        };
+    };
 }
 
 function checkValidPath(path: string) {

@@ -16,7 +16,7 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { CompilerOptions, transpileModule } from "typescript";
+import { CompilerOptions, transpileModule, createProgram, CompilerHost, createCompilerHost, createSourceFile, WriteFileCallback, getPreEmitDiagnostics } from "typescript";
 import { compileString } from "sass";
 import electron from "electron";
 
@@ -29,10 +29,60 @@ import * as ipc from "~/common/ipc";
 import { dirname } from "./util";
 
 import pkg from "../../package.json" assert { type: "json" };
+import { File } from "~/common/filesystem/types";
 
 if (process.env.AERO_PRELOAD) require(process.env.AERO_PRELOAD);
 
 const AeroConfiguration = new FileSystem(process.env.DATA_PATH);
+
+const libFiles = {} as {
+    [key: string]: File;
+}
+
+const libs = dirname(require.resolve("typescript"))
+for (const lib of fs.readdirSync(libs, { withFileTypes: true })) {
+    if (lib.isFile() && lib.name.startsWith("lib.") && lib.name.endsWith(".d.ts")) {
+        libFiles[lib.name] = {
+            type: "file",
+            relativePath: lib.name,
+            absolutePath: "i dont care man this file doesnt exist",
+            content: fs.readFileSync(path.join(libs, lib.name), "utf8"),
+            filename: lib.name,
+            extension: ".ts"
+        }
+    }
+}
+
+const defaultCompilerHost = createCompilerHost({});
+// https://convincedcoder.com/2019/01/19/Processing-TypeScript-using-TypeScript/
+function makeCompilerHost(fileSystem: FileSystem, writeFile: WriteFileCallback): CompilerHost {
+    Object.assign(fileSystem.getDirectory("/").files, libFiles);
+
+    return {
+        getSourceFile: (fileName, languageVersionOrOptions) => {
+            console.log("getSourceFile", fileName);
+            return createSourceFile(fileName, fileSystem.getFile(fileName)?.content, languageVersionOrOptions);;
+        },
+        getDefaultLibFileName: () => "lib.esnext.full.d.ts", // we ignore compileroptions, target is always esnext.
+        writeFile,
+        getCurrentDirectory: () => fileSystem.basePath,
+        readFile: (fileName) => fileSystem.getFile(fileName)?.content,
+        fileExists: (fileName) => fileSystem.getFile(fileName) !== undefined,
+        getCanonicalFileName: (fileName) => {
+            return defaultCompilerHost.getCanonicalFileName(fileName);
+        },
+        useCaseSensitiveFileNames: () => {
+            return defaultCompilerHost.useCaseSensitiveFileNames();
+        },
+        getNewLine: () => {
+            return defaultCompilerHost.getNewLine();
+        },
+    };
+}
+
+function checkValidPath(path: string) {
+    if (path.includes("../") || path.includes("..\\")) throw new Error(`Invalid path: ${path}`);
+}
 
 electron.contextBridge.exposeInMainWorld("aeroNative", {
     version: pkg.version,
@@ -59,6 +109,27 @@ electron.contextBridge.exposeInMainWorld("aeroNative", {
                 outputText: result.outputText,
                 sourceMapText: result.sourceMapText,
             };
+        },
+        transpileProgram: (pathToDir: string, entryFile: string, compilerOptions: CompilerOptions) => {
+            console.log(AeroConfiguration)
+            try {
+
+                checkValidPath(pathToDir);
+                checkValidPath(entryFile);
+
+                const writeFile: WriteFileCallback = (fileName, data) => {
+                    console.log("writeFile", fileName, data);
+                }
+                const compilerHost = makeCompilerHost(AeroConfiguration.subFs(pathToDir), writeFile);
+
+                const program = createProgram([entryFile], compilerOptions, compilerHost);
+                const emitResult = program.emit(program.getSourceFile(entryFile), writeFile)
+                const allDiagnostics = getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
+
+                console.log("output", emitResult, allDiagnostics);
+            } catch(e) {
+                console.error(e);
+            }
         },
         transpileCSS: (code: string, filePath: string) => {
             const result = compileString(code, {
