@@ -57,7 +57,7 @@ export default () => {
             if (type === "plugins") {
                 togglePlugin(addon as AeroPlugin);
 
-                if ((addon as AeroPlugin).patches.length) {
+                if ((addon as AeroPlugin).patches?.length) {
                     showReloadDialog();
                 }
             } else {

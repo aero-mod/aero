@@ -1,0 +1,23 @@
+[class^="profileBadges"]:has(.aero-badge) {
+    padding: 4px;
+}
+
+.aero-badge {
+    &.format {
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &.aero-interactive {
+        cursor: pointer;
+    }
+
+    svg,
+    img {
+        width: 13px;
+        height: 13px;
+    }
+}

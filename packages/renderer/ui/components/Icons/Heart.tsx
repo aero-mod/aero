@@ -16,27 +16,14 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { sleep } from "~/renderer/util/time";
-import { waitFor } from "../webpack";
+import { IconProps, makeSvg } from "./base";
 
-export let ReactSpring: typeof import("react-spring");
-export let ReactDOM: typeof import("react-dom");
-export let React: typeof import("react");
-
-waitFor(["findDOMNode"], false).then((md) => {
-    ReactDOM = md;
-});
-
-waitFor(["useState"], false).then((md) => {
-    React = md;
-});
-
-waitFor(["useSpring"], false).then(async (md) => {
-    ReactSpring = md;
-
-    while (!window.aero.notifications) {
-        await sleep(1);
-    }
-
-    window.aero.notifications._initialiseToasts();
-});
+export default (props: IconProps) => {
+    return makeSvg(
+        ["M12 7.725C12.025-.722 23.022.577 23 9c-.017 6.875-11 13-11 13S1.08 15.875 1 9C.9.579 11.889-.722 12 7.725Z"],
+        "0 0 24 24",
+        props.size || 16,
+        props.fill,
+        props.stroke
+    );
+};

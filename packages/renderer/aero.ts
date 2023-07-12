@@ -20,6 +20,7 @@ import { Filters, getModule, waitFor, globalPromise, common, __webpack_require__
 import { openDocumentationPageWithString, openByName } from "./api/docs";
 import { showModal, showToast, removeToast } from "./api/notifications";
 import { initialise } from "./ui/components/Toast";
+import * as badges from "./api/attachments/badges";
 import * as components from "./ui/components";
 import * as menu from "./api/patcher/menu";
 import { plugins } from "./api/plugins";
@@ -35,6 +36,7 @@ export default {
     components,
     plugins,
     themes,
+    badges,
     docs: {
         openByName,
         openDocumentationPageWithString,
