@@ -47,7 +47,7 @@ export class FileSystem {
         });
     }
 
-    #buildTree(basePath: string, relativePath: string = "/"): Directory {
+    #buildTree(basePath: string, relativePath = "/"): Directory {
         const nodes = fs.readdirSync(basePath, { withFileTypes: true });
 
         const tree: Directory = {
@@ -62,14 +62,16 @@ export class FileSystem {
         for (const node of nodes) {
             const nextBase = path.join(basePath, node.name),
                 nextRelative = path.join(relativePath, node.name);
-            tree[node.isFile() ? "files" : "directories"][node.name] = node.isFile() ? {
-                type: "file",
-                relativePath: nextRelative,
-                absolutePath: nextBase,
-                content: fs.readFileSync(nextBase, "utf8"),
-                filename: node.name,
-                extension: node.name.split(".").pop(),
-            } : this.#buildTree(nextBase, nextRelative);
+            tree[node.isFile() ? "files" : "directories"][node.name] = node.isFile()
+                ? {
+                      type: "file",
+                      relativePath: nextRelative,
+                      absolutePath: nextBase,
+                      content: fs.readFileSync(nextBase, "utf8"),
+                      filename: node.name,
+                      extension: node.name.split(".").pop(),
+                  }
+                : this.#buildTree(nextBase, nextRelative);
         }
 
         return tree;
@@ -170,7 +172,7 @@ export const makeFs = (fileSystem: FileSystem) => {
     function isFile(path: string) {
         checkValidPath(path);
         return fileSystem.isFile(path);
-    };
+    }
 
     function readFile(path: string) {
         checkValidPath(path);
@@ -179,29 +181,35 @@ export const makeFs = (fileSystem: FileSystem) => {
         if (!file) throw new Error(`File not found: ${path}`);
 
         return file.content;
-    };
+    }
 
     function writeFile(path: string, content: string) {
         checkValidPath(path);
         return fileSystem.writeFile(path, content);
-    };
+    }
 
     function unlinkFile(path: string) {
         checkValidPath(path);
         return fileSystem.unlink(path, true);
     }
 
-    function readdir(path: string, withFileTypes: true): { name: string; isFile: boolean; }[]
-    function readdir(path: string, withFileTypes?: false | undefined): string[]
-    function readdir(path: string, withFileTypes?: boolean | undefined): string[] | { name: string; isFile: boolean; }[] {
+    function readdir(path: string, withFileTypes: true): { name: string; isFile: boolean }[];
+    function readdir(path: string, withFileTypes?: false | undefined): string[];
+    function readdir(
+        path: string,
+        withFileTypes?: boolean | undefined
+    ): string[] | { name: string; isFile: boolean }[] {
         checkValidPath(path);
         const dir = fileSystem.getDirectory(path);
 
         if (!dir) throw new Error(`Directory not found: ${path}`);
 
-        return withFileTypes ?
-            [...Object.keys(dir.files).map((name) => ({ name, isFile: true })), ...Object.keys(dir.directories).map((name) => ({ name, isFile: false }))] :
-            [...Object.keys(dir.files), ...Object.keys(dir.directories)];
+        return withFileTypes
+            ? [
+                  ...Object.keys(dir.files).map((name) => ({ name, isFile: true })),
+                  ...Object.keys(dir.directories).map((name) => ({ name, isFile: false })),
+              ]
+            : [...Object.keys(dir.files), ...Object.keys(dir.directories)];
     }
 
     function subdirs(path: string) {
@@ -220,13 +228,13 @@ export const makeFs = (fileSystem: FileSystem) => {
         if (!dir) throw new Error(`Directory not found: ${path}`);
 
         return Object.keys(dir.files);
-    };
+    }
 
     function mkdir(path: string) {
         checkValidPath(path);
 
         return fileSystem.createDirectory(path);
-    };
+    }
 
     function unlinkDir(path: string) {
         checkValidPath(path);
@@ -236,17 +244,13 @@ export const makeFs = (fileSystem: FileSystem) => {
     function exists(path: string) {
         checkValidPath(path);
         return fileSystem.exists(path);
-    };
+    }
 
     function resolveToAbsolute(relativePath: string) {
         // we can assume that we want the leading slash to be removed
 
-        return path.resolve(
-            fileSystem.basePath,
-            relativePath.startsWith("/") ? relativePath.slice(1) : relativePath
-        );
+        return path.resolve(fileSystem.basePath, relativePath.startsWith("/") ? relativePath.slice(1) : relativePath);
     }
-
 
     return {
         exists,

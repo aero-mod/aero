@@ -16,6 +16,8 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+/* eslint-disable no-console */
+
 import logger from "~/common/logger";
 import { hashDir, hashFile } from "~/renderer/util/hash";
 import { originalConsole } from "~/renderer/util/polyfill";
@@ -79,21 +81,25 @@ export const loadExternalPlugins = async () => {
     console.time("Plugins transpiled in");
     const plugins = [];
 
-    const transpiledCache = new Map<string, {
-        hash: string;
-        transpiled: string;
-    }>();
-    fs.exists(cachePath) && fs.readdir(`${cachePath}`).forEach((file) => {
-        const content = fs.readFile(`${cachePath}/${file}`);
-        try {
-            const parsed = JSON.parse(content);
-            if (!parsed.hash || !parsed.transpiled) return;
-
-            transpiledCache.set(file, parsed);
-        } catch (e) {
-            logger.error("Error trying to parse file:", e);
+    const transpiledCache = new Map<
+        string,
+        {
+            hash: string;
+            transpiled: string;
         }
-    });
+    >();
+    fs.exists(cachePath) &&
+        fs.readdir(`${cachePath}`).forEach((file) => {
+            const content = fs.readFile(`${cachePath}/${file}`);
+            try {
+                const parsed = JSON.parse(content);
+                if (!parsed.hash || !parsed.transpiled) return;
+
+                transpiledCache.set(file, parsed);
+            } catch (e) {
+                logger.error("Error trying to parse file:", e);
+            }
+        });
 
     for (const pluginName of fs.getFiles("/plugins")) {
         let pluginNameNoExt: string | string[] = pluginName.split(".");
@@ -116,10 +122,13 @@ export const loadExternalPlugins = async () => {
 
         logger.debug("No transpilation cache or bad hash for", pluginNameNoExt);
         const transpiled = transpilePlugin(fs.readFile(`/plugins/${pluginName}`), pluginName);
-        fs.writeFile(`${cachePath}/${pluginNameNoExt}`, JSON.stringify({
-            hash,
-            transpiled,
-        }));
+        fs.writeFile(
+            `${cachePath}/${pluginNameNoExt}`,
+            JSON.stringify({
+                hash,
+                transpiled,
+            })
+        );
         plugins.push(wrapJSLike(pluginName, transpiled));
         transpiledCache.delete(pluginNameNoExt);
     }
@@ -128,10 +137,13 @@ export const loadExternalPlugins = async () => {
         const entrypoint = findValidIndex(`/plugins/${pluginName}`);
         if (!entrypoint) continue;
 
-        const hash = await hashDir(`/plugins/${pluginName}`, ignoreDirs, (name) => hashableFiletypes.has(name.split(".").pop()) || name === "package.json");
+        // const hash = await hashDir(
+        //     `/plugins/${pluginName}`,
+        //     ignoreDirs,
+        //     (name) => hashableFiletypes.has(name.split(".").pop()) || name === "package.json"
+        // );
 
         // TODO: load folder plugins?
-
     }
 
     // remove caches for plugins that no longer exist

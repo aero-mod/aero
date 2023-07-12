@@ -18,7 +18,6 @@
 
 import settings, { observeSettings } from "./settings";
 import { React } from "./webpack/common";
-import { Addon } from "./types";
 
 class Store<
     T = {
