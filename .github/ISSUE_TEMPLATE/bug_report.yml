@@ -51,6 +51,6 @@ body:
           label: Logs/Errors
           description: Any output logs or console messages relevant to the issue.
           placeholder: |
-              Cannot read property "aero" of undefined.
+              Uncaught TypeError: Cannot read properties of undefined (reading 'aero')
               at Object.<anonymous> (aero:renderer:1:1)
           render: shell
