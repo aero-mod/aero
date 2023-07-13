@@ -38,7 +38,7 @@ export default (props: {
 }) => (
     <ModalRoot size={props.modalSize || ModalSize.Medium} rest={props.rest}>
         <ModalHeader>
-            <FormTitle nomargin level={1}>
+            <FormTitle noMargin level={1}>
                 {props.title}
             </FormTitle>
         </ModalHeader>

@@ -24,7 +24,6 @@ import path from "node:path";
 import fs from "node:fs";
 
 import { makeFs, FileSystem } from "~/common/filesystem/main";
-import { AeroNative } from "~/renderer/globals";
 import * as ipc from "~/common/ipc";
 import { dirname } from "./util";
 
@@ -34,9 +33,9 @@ if (process.env.AERO_PRELOAD) require(process.env.AERO_PRELOAD);
 
 const AeroConfiguration = new FileSystem(process.env.DATA_PATH);
 
-electron.contextBridge.exposeInMainWorld("aeroNative", {
+export const aeroNative = {
     version: pkg.version,
-    channel: process.env.AERO_CHANNEL as AeroNative["channel"],
+    channel: process.env.AERO_CHANNEL as "development" | "production" | "preview",
     native: {
         versions: process.versions,
     },
@@ -90,7 +89,9 @@ electron.contextBridge.exposeInMainWorld("aeroNative", {
             };
         },
     },
-} satisfies AeroNative);
+};
+
+electron.contextBridge.exposeInMainWorld("aeroNative", aeroNative);
 
 const styles = fs.readFileSync(path.join(__dirname, "renderer.css"), "utf8");
 const script = fs.readFileSync(path.join(__dirname, "renderer.js"), "utf8");
