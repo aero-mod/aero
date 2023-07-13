@@ -16,7 +16,19 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Filters, getModule, waitFor, globalPromise, common, __webpack_require__ } from "./api/webpack";
+import {
+    Filters,
+    getModule,
+    waitFor,
+    globalPromise,
+    common,
+    __webpack_require__,
+    getByDisplayName,
+    getByKeys,
+    getByMangled,
+    getByStore,
+    getByStrings,
+} from "./api/webpack";
 import { openDocumentationPageWithString, openByName } from "./api/docs";
 import { showModal, showToast, removeToast } from "./api/notifications";
 import { initialise } from "./ui/components/Toast";
@@ -54,6 +66,11 @@ export default {
     },
     webpack: {
         get: getModule,
+        getByDisplayName,
+        getByKeys,
+        getByMangled,
+        getByStore,
+        getByStrings,
         waitFor,
         Filters,
         common,

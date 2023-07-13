@@ -161,7 +161,7 @@ export const waitFor = async (
 
 export const Filters = {
     byDisplayName: (name: string) => (ele: unknown) => ele["displayName"] === name,
-    byStore: (name: string) => (ele: unknown) => ele["default"]?.constructor?.["displayName"] === name,
+    byStore: (name: string) => (ele: unknown) => ele["default"]?.constructor?.displayName === name,
     byMangled: (filter: (ele: unknown) => boolean) => {
         return (mod: unknown) => {
             if (!mod) return false;
@@ -218,3 +218,9 @@ export const Filters = {
             return false;
         },
 };
+
+export const getByDisplayName = (name: string) => getModule(Filters.byDisplayName(name));
+export const getByStore = (name: string) => getModule(Filters.byStore(name));
+export const getByMangled = (filter: (ele: unknown) => boolean) => getModule(Filters.byMangled(filter));
+export const getByKeys = (...keys: string[]) => getModule(Filters.byKeys(...keys));
+export const getByStrings = (...strings: string[]) => getModule(Filters.byStrings(...strings));
