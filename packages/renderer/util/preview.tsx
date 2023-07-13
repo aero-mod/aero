@@ -33,7 +33,7 @@ export default async () => {
             (close) => (
                 <>
                     <ModalHeader center>
-                        <FormTitle nomargin level={1}>
+                        <FormTitle noMargin level={1}>
                             Aero Preview Build
                         </FormTitle>
                     </ModalHeader>

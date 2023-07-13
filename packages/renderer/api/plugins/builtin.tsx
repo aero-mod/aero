@@ -99,7 +99,7 @@ const internal = new Map<string, ProfileBadge[]>();
                             (close) => (
                                 <>
                                     <ModalHeader>
-                                        <FormTitle nomargin level={1}>
+                                        <FormTitle noMargin level={1}>
                                             Donate to Aero
                                         </FormTitle>
                                         <ModalCloseButton onClick={close} />

@@ -101,7 +101,7 @@ export default () => {
                                         (close) => (
                                             <>
                                                 <ModalHeader center>
-                                                    <FormTitle nomargin level={1}>
+                                                    <FormTitle noMargin level={1}>
                                                         Add Remote Plugin
                                                     </FormTitle>
                                                 </ModalHeader>
@@ -170,7 +170,7 @@ export default () => {
                                         (close) => (
                                             <>
                                                 <ModalHeader center>
-                                                    <FormTitle nomargin level={1}>
+                                                    <FormTitle noMargin level={1}>
                                                         Quick Theme URLs
                                                     </FormTitle>
                                                 </ModalHeader>

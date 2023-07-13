@@ -75,7 +75,9 @@ export default (
                     <div className="addon-card-header">
                         <div className="addon-card-text">
                             <div className="addon-card-name">{plugin.name}</div>
-                            <div className="addon-card-description">{plugin.description}</div>
+                            <div className="addon-card-description">
+                                {plugin.description || "No description provided."}
+                            </div>
                         </div>
                         {!plugin["agent"] && (
                             <div className="addon-card-switch">
@@ -87,7 +89,7 @@ export default (
                                             showModal((close) => (
                                                 <>
                                                     <ModalHeader separator>
-                                                        <FormTitle nomargin level={1}>
+                                                        <FormTitle noMargin level={1}>
                                                             {plugin.name} Settings
                                                         </FormTitle>
                                                         <ModalCloseButton onClick={close} />
@@ -168,7 +170,9 @@ export default (
                     <div className="addon-card-header">
                         <div className="addon-card-text">
                             <div className="addon-card-name">{theme.name}</div>
-                            <div className="addon-card-description">{theme.description}</div>
+                            <div className="addon-card-description">
+                                {theme.description || "No description provided."}
+                            </div>
                         </div>
                         <div className="addon-card-switch">
                             <Switch value={props.enabled} onChange={(a) => props.setEnabled(a)} />

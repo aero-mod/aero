@@ -20,7 +20,7 @@ import "./formtitle.scss";
 
 export default (props: {
     className?: string;
-    nomargin?: boolean;
+    noMargin?: boolean;
     level: 1 | 2 | 3 | 4 | 5 | 6;
     children: string | number | boolean | React.JSX.Element | React.ReactFragment;
 }) => {
@@ -28,7 +28,7 @@ export default (props: {
         case 1:
             return (
                 <h1
-                    className={`form-title ${props.nomargin ? "nomargin" : ""} h${props.level} ${
+                    className={`form-title ${props.noMargin ? "nomargin" : ""} h${props.level} ${
                         props.className || ""
                     }`}
                 >
@@ -38,7 +38,7 @@ export default (props: {
         case 2:
             return (
                 <h2
-                    className={`form-title ${props.nomargin ? "nomargin" : ""}  h${props.level} ${
+                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
                         props.className || ""
                     }`}
                 >
@@ -48,7 +48,7 @@ export default (props: {
         case 3:
             return (
                 <h3
-                    className={`form-title ${props.nomargin ? "nomargin" : ""}  h${props.level} ${
+                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
                         props.className || ""
                     }`}
                 >
@@ -58,7 +58,7 @@ export default (props: {
         case 4:
             return (
                 <h4
-                    className={`form-title ${props.nomargin ? "nomargin" : ""}  h${props.level} ${
+                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
                         props.className || ""
                     }`}
                 >
@@ -68,7 +68,7 @@ export default (props: {
         case 5:
             return (
                 <h5
-                    className={`form-title ${props.nomargin ? "nomargin" : ""}  h${props.level} ${
+                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
                         props.className || ""
                     }`}
                 >
@@ -78,7 +78,7 @@ export default (props: {
         case 6:
             return (
                 <h6
-                    className={`form-title ${props.nomargin ? "nomargin" : ""}  h${props.level} ${
+                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
                         props.className || ""
                     }`}
                 >
