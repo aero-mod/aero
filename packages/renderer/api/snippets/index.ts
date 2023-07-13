@@ -17,7 +17,7 @@
  */
 
 import { wrapJSLike } from "../plugins/external";
-import { SourceMap } from "~/renderer/globals";
+import { SourceMap } from "~content/globals";
 import { h, snippets } from "../dom";
 
 const fs = window.aeroNative.fileSystem;
