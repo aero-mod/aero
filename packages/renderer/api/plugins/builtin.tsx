@@ -260,6 +260,28 @@ export const qol: AgentPlugin = {
     },
     patches: [
         {
+            find: "If someone told you to copy/paste something here you have an 11/10 chance you're being scammed.",
+            replacement: [
+                {
+                    match: /If someone told you to copy\/paste something here you have an 11\/10 chance you're being scammed\./,
+                    replace: "If you're reading this, you're probably smarter than most Discord developers.",
+                },
+                {
+                    match: /Pasting anything in here could give attackers access to your Discord account\./,
+                    replace: "Pasting anything in here could actually improve the Discord client.",
+                },
+                {
+                    match: /Unless you understand exactly what you are doing, close this window and stay safe\./,
+                    replace:
+                        "Unless you understand exactly what you're doing, keep this window open to browse our bad code.",
+                },
+                {
+                    match: /If you do understand exactly what you are doing, you should come work with us/,
+                    replace: "If you don't understand exactly what you're doing, you should come work with us",
+                },
+            ],
+        },
+        {
             find: ".versionHash",
             replacement: [
                 {
