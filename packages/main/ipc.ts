@@ -23,7 +23,7 @@ import fs from "node:fs";
 
 import * as ipc from "~/common/ipc";
 
-const dataDirectory = path.join(app.getPath("appData"), "aero");
+export const dataDirectory = path.join(app.getPath("appData"), "aero");
 
 process.env.DATA_PATH = dataDirectory;
 
