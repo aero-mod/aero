@@ -16,7 +16,10 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { reapply, isStyle } from "../snippets";
 import { React } from "../webpack/common";
+
+const fs = window.aeroNative.fileSystem;
 
 export interface Settings {
     debugLogs: boolean;
@@ -48,4 +51,41 @@ export default (): [() => Settings, (newSettings: Partial<Settings>) => void] =>
             }
         },
     ];
+};
+
+export const useSnippets = (): [
+    () => {
+        [key: string]: string;
+    }
+] => {
+    const files = fs.readdir("/snippets");
+
+    const [_snippetFiles] = React.useState<string[]>(files);
+
+    const proxy = new Proxy(
+        {},
+        {
+            get(_, prop: string) {
+                if (prop === "_files") return _snippetFiles;
+
+                return fs.readFile(`/snippets/${prop}`);
+            },
+            set(_, prop: string, value: string) {
+                fs.writeFile(`/snippets/${prop}`, value);
+
+                if (isStyle(prop)) reapply(prop);
+
+                return true;
+            },
+            deleteProperty(_, prop: string) {
+                fs.unlinkFile(`/snippets/${prop}`);
+
+                if (isStyle(prop)) reapply(prop);
+
+                return true;
+            },
+        }
+    );
+
+    return [() => proxy];
 };

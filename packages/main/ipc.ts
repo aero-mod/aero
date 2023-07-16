@@ -53,6 +53,12 @@ export default () => {
         shell.openPath(path.join(dataDirectory, "data"));
     });
 
+    ipcMain.handle(ipc.OPEN_FILE, (_, p: string) => {
+        if (p.includes("..")) return;
+
+        shell.openPath(path.join(dataDirectory, p));
+    });
+                   
     ipcMain.handle(ipc.SAVE_SETTINGS, (_, pair) => {
         updateSettings(pair);
     });

@@ -16,13 +16,12 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { OPEN_SNIPPET_DIRECTORY } from "~/common/ipc";
 import { waitFor } from "~/renderer/api/webpack";
 import aero from "~/renderer/aero";
 
 import ErrorBoundary from "../components/ErrorBoundary";
-import External from "../components/Icons/External";
 import Dashboard from "./panes/Dashboard";
+import Snippets from "./panes/Snippets";
 import Addons from "./panes/Addons";
 
 import "./settings.scss";
@@ -42,7 +41,8 @@ export default async () => {
                 label?: string;
                 icon?: React.JSX.Element;
                 className?: string;
-                onClick?: () => void;
+                onClick?: (e: React.MouseEvent) => void;
+                onContextMenu?: (e: React.MouseEvent) => void;
                 element?: () => React.JSX.Element;
             }[] = []
         ) => {
@@ -55,7 +55,8 @@ export default async () => {
                 label?: string;
                 icon?: React.JSX.Element;
                 className?: string;
-                onClick?: () => void;
+                onClick?: (e: React.MouseEvent) => void;
+                onContextMenu?: (e: React.MouseEvent) => void;
                 element?: () => React.JSX.Element;
             }) => {
                 ret.splice(location, 0, section);
@@ -88,10 +89,11 @@ export default async () => {
             insertSettingsPane({
                 section: "snippets",
                 label: "Snippets",
-                icon: <External />,
-                onClick: () => {
-                    window.aeroNative.ipc.invoke(OPEN_SNIPPET_DIRECTORY);
-                },
+                element: () => (
+                    <ErrorBoundary>
+                        <Snippets />
+                    </ErrorBoundary>
+                ),
             });
         }
     );

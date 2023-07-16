@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@electron/asar': ^3.2.4
+  '@monaco-editor/loader': ^1.3.3
   '@rollup/plugin-commonjs': ^25.0.1
   '@rollup/plugin-json': ^6.0.0
   '@rollup/plugin-node-resolve': ^15.1.0
@@ -26,6 +27,7 @@ specifiers:
   eslint-plugin-unused-imports: ^2.0.0
   fflate: ^0.8.0
   highlight.js: ^11.8.0
+  monaco-editor: ^0.39.0
   prettier: ^2.8.8
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -41,6 +43,7 @@ dependencies:
 
 devDependencies:
   '@electron/asar': 3.2.4
+  '@monaco-editor/loader': 1.3.3_monaco-editor@0.39.0
   '@rollup/plugin-commonjs': 25.0.1_rollup@3.24.0
   '@rollup/plugin-json': 6.0.0_rollup@3.24.0
   '@rollup/plugin-node-resolve': 15.1.0_rollup@3.24.0
@@ -64,6 +67,7 @@ devDependencies:
   eslint-plugin-unused-imports: 2.0.0_7wxcmomwssw5d45azz23gkyi74
   fflate: 0.8.0
   highlight.js: 11.8.0
+  monaco-editor: 0.39.0
   prettier: 2.8.8
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -199,6 +203,15 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: true
+
+  /@monaco-editor/loader/1.3.3_monaco-editor@0.39.0:
+    resolution: {integrity: sha512-6KKF4CTzcJiS8BJwtxtfyYt9shBiEv32ateQ9T4UVogwn4HM/uPo9iJd2Dmbkpz8CM6Y0PDUpjnZzCwC+eYo2Q==}
+    peerDependencies:
+      monaco-editor: '>= 0.21.0 < 1'
+    dependencies:
+      monaco-editor: 0.39.0
+      state-local: 1.0.7
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:
@@ -2158,6 +2171,10 @@ packages:
     resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
     dev: true
 
+  /monaco-editor/0.39.0:
+    resolution: {integrity: sha512-zhbZ2Nx93tLR8aJmL2zI1mhJpsl87HMebNBM6R8z4pLfs8pj604pIVIVwyF1TivcfNtIPpMXL+nb3DsBmE/x6Q==}
+    dev: true
+
   /ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
     dev: true
@@ -2650,6 +2667,10 @@ packages:
     resolution: {integrity: sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug==}
     dev: true
     optional: true
+
+  /state-local/1.0.7:
+    resolution: {integrity: sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w==}
+    dev: true
 
   /static-extend/0.1.2:
     resolution: {integrity: sha512-72E9+uLc27Mt718pMHt9VMNiAL4LMsmDbBva8mxWUCkT07fSzEGMYUCk0XWY6lp0j6RBAG4cJ3mWuZv2OE3s0g==}
