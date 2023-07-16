@@ -21,6 +21,7 @@ import { components } from "~/renderer/api/webpack/common";
 import { showModal } from "~/renderer/api/notifications";
 import buildSettings from "../settings/buildSettings";
 import { Theme } from "~/renderer/api/themes/types";
+import { c } from "~/renderer/util/classes";
 
 import { ModalContent, ModalCloseButton, ModalHeader } from "./Modal";
 import PanelButton from "./PanelButton";
@@ -64,7 +65,9 @@ export default (
 
         return (
             <div
-                className={`addon-card ${plugin["agent"] ? "agent" : ""}`}
+                className={c("addon-card", {
+                    agent: !!plugin["agent"],
+                })}
                 style={{
                     // @ts-expect-error css variable
                     "--addon-accent": plugin.color || "var(--text-default)",

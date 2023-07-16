@@ -16,6 +16,8 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { c } from "~/renderer/util/classes";
+
 import "./formtitle.scss";
 
 export default (props: {
@@ -24,66 +26,27 @@ export default (props: {
     level: 1 | 2 | 3 | 4 | 5 | 6;
     children: string | number | boolean | React.JSX.Element | React.ReactFragment;
 }) => {
+    const className = c(
+        "form-title",
+        {
+            nomargin: props.noMargin,
+            [`h${props.level}`]: true,
+        },
+        props.className
+    );
+
     switch (props.level) {
         case 1:
-            return (
-                <h1
-                    className={`form-title ${props.noMargin ? "nomargin" : ""} h${props.level} ${
-                        props.className || ""
-                    }`}
-                >
-                    {props.children}
-                </h1>
-            );
+            return <h1 className={className}>{props.children}</h1>;
         case 2:
-            return (
-                <h2
-                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
-                        props.className || ""
-                    }`}
-                >
-                    {props.children}
-                </h2>
-            );
+            return <h2 className={className}>{props.children}</h2>;
         case 3:
-            return (
-                <h3
-                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
-                        props.className || ""
-                    }`}
-                >
-                    {props.children}
-                </h3>
-            );
+            return <h3 className={className}>{props.children}</h3>;
         case 4:
-            return (
-                <h4
-                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
-                        props.className || ""
-                    }`}
-                >
-                    {props.children}
-                </h4>
-            );
+            return <h4 className={className}>{props.children}</h4>;
         case 5:
-            return (
-                <h5
-                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
-                        props.className || ""
-                    }`}
-                >
-                    {props.children}
-                </h5>
-            );
+            return <h5 className={className}>{props.children}</h5>;
         case 6:
-            return (
-                <h6
-                    className={`form-title ${props.noMargin ? "nomargin" : ""}  h${props.level} ${
-                        props.className || ""
-                    }`}
-                >
-                    {props.children}
-                </h6>
-            );
+            return <h6 className={className}>{props.children}</h6>;
     }
 };

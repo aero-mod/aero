@@ -28,6 +28,7 @@ import { Theme } from "~/renderer/api/themes/types";
 import { openByName } from "~/renderer/api/docs";
 import { plugins } from "~/renderer/api/plugins";
 import { themes } from "~/renderer/api/themes";
+import { c } from "~/renderer/util/classes";
 
 import { ModalContent, ModalFooter, ModalHeader, ModalSize } from "../../components/Modal";
 import Button, { ButtonColor, ButtonSize } from "../../components/Button";
@@ -82,12 +83,19 @@ export default () => {
             <div className="tab-bar" role="tablist" aria-orientation="horizontal">
                 <div className="tab-bar-options">
                     <div
-                        className={`tab ${section === "plugins" ? "active" : ""}`}
+                        className={c("tab", {
+                            active: section === "plugins",
+                        })}
                         onClick={() => setSection("plugins")}
                     >
                         Plugins
                     </div>
-                    <div className={`tab ${section === "themes" ? "active" : ""}`} onClick={() => setSection("themes")}>
+                    <div
+                        className={c("tab", {
+                            active: section === "themes",
+                        })}
+                        onClick={() => setSection("themes")}
+                    >
                         Themes
                     </div>
                 </div>
@@ -218,7 +226,11 @@ export default () => {
                     )}
                 </div>
             </div>
-            <div className={`addons-container ${settings().loadThirdParty ? "" : "disabled"}`}>
+            <div
+                className={c("addons-container", {
+                    disabled: !settings().loadThirdParty,
+                })}
+            >
                 {section === "plugins" ? (
                     <>
                         <div className="addons-section">

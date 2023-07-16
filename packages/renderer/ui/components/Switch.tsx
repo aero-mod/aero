@@ -16,6 +16,8 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { c } from "~/renderer/util/classes";
+
 import "./switch.scss";
 
 type SwitchProps = {
@@ -31,7 +33,13 @@ export default (props: SwitchProps) => {
 
     return (
         <div
-            className={`switch-container ${className || ""} ${disabled ? "disabled" : ""}`}
+            className={c(
+                "switch-container",
+                {
+                    disabled,
+                },
+                className
+            )}
             onClick={() => onChange(!value)}
             style={{
                 backgroundColor: value ? "rgba(35, 165, 90, 1)" : "rgba(128, 132, 142, 1)",

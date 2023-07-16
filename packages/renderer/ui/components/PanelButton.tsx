@@ -17,6 +17,7 @@
  */
 
 import { Tooltip } from "~/renderer/api/webpack/common/components";
+import { c } from "~/renderer/util/classes";
 
 import "./panelbutton.scss";
 
@@ -34,7 +35,7 @@ export default (props: PanelButtonProps) => {
             {(p) => (
                 <button
                     {...p}
-                    className={`panel-button ${props.className || ""}`}
+                    className={c("panel-button", props.className)}
                     onClick={props.onClick}
                     disabled={props.disabled}
                 >

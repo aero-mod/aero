@@ -16,6 +16,8 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { c } from "~/renderer/util/classes";
+
 import "./button.scss";
 
 export enum ButtonColor {
@@ -59,9 +61,16 @@ export default (props: ButtonProps) => {
 
     return (
         <button
-            className={`button ${props.fullwidth ? "fullwidth" : ""} color-${color || ButtonColor.BRAND} size-${
-                size || ButtonSize.SMALL
-            } look-${look || ButtonLook.FILLED} ${className || ""}`}
+            className={c(
+                "button",
+                {
+                    fullwidth: props.fullwidth,
+                    [`color-${color || ButtonColor.BRAND}`]: true,
+                    [`size-${size || ButtonSize.SMALL}`]: true,
+                    [`look-${look || ButtonLook.FILLED}`]: true,
+                },
+                className
+            )}
             onClick={onClick}
             disabled={disabled}
             style={style}
