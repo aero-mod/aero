@@ -36,7 +36,7 @@ const possibleIndexes = (path: string) => {
 export const loadExternalThemes = () => {
     const themes = [];
 
-    const themeFiles = fs.readdir("/themes");
+    const themeFiles = fs.subdirs("/themes");
 
     for (const theme of themeFiles) {
         const themePath = `/themes/${theme}`;
