@@ -21,7 +21,6 @@ import { ToastProps, registry, toastSetter } from "~/renderer/ui/components/Toas
 import { ModalSize, ModalRoot } from "~/renderer/ui/components/Modal";
 import Generic from "./Generic";
 
-// TODO: Remove this and use custom components
 export const showReloadDialog = () => {
     _MEGA_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.openModal((props: { onClose: () => void; [key: string]: unknown }) => (
         <_MEGA_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Dialog

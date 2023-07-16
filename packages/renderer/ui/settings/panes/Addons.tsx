@@ -16,7 +16,7 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { showModal, showReloadDialog } from "~/renderer/api/notifications";
+import { showModal, showReloadDialog, showToast } from "~/renderer/api/notifications";
 import { OPEN_PLUGIN_DIRECTORY, OPEN_THEME_DIRECTORY } from "~/common/ipc";
 import { EnabledAddonStore, useStore } from "~/renderer/api/stores";
 import { React, components } from "~/renderer/api/webpack/common";
@@ -128,10 +128,17 @@ export default () => {
                                                         fullwidth
                                                         size={ButtonSize.LARGE}
                                                         color={ButtonColor.BRAND}
-                                                        onClick={
+                                                        onClick={() => {
                                                             // TODO: Add remote plugin
-                                                            close
-                                                        }
+                                                            showToast({
+                                                                title: "Not Implemented",
+                                                                children:
+                                                                    "Sorry, this feature is still being worked on!",
+                                                                color: "var(--text-danger)",
+                                                            });
+
+                                                            close();
+                                                        }}
                                                     >
                                                         Add
                                                     </Button>

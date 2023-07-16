@@ -1,7 +1,5 @@
 /* eslint-disable header/header */
 
-// TODO: check header
-
 /**
  * Modified from Vencord, a modification for Discord's desktop app (https://github.com/Vendicated/Vencord/blob/main/src/webpack/patchWebpack.ts)
  * Copyright (c) 2022 Vendicated and contributors
