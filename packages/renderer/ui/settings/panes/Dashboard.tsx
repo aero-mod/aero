@@ -160,6 +160,19 @@ export default () => {
                     "Sends debug logs to the console during runtime.\nThis is useful for debugging addons and themes."
                 }
             />
+            {window.DiscordNative.process.platform === "darwin" && (
+                <SettingsItem
+                    type="switch"
+                    value={settings().vibrancy}
+                    onChange={(value) => {
+                        setSettings({ vibrancy: value });
+
+                        showReloadDialog();
+                    }}
+                    title="Under-Window Vibrancy"
+                    note={"Adds vibrancy to the window.\nThis is only available on macOS."}
+                />
+            )}
             <footer className="dash-footer">
                 Please consider donating to Aero's development!
                 <Button
