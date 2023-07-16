@@ -212,7 +212,7 @@ export const Filters = {
 
                 if (typeof string !== "string") continue;
 
-                if (strings.every((str) => string.includes(str))) return true;
+                if (strings.every((str) => string.includes(str))) return key;
             }
 
             return false;
