@@ -22,6 +22,7 @@ import electron from "electron";
 
 import path from "node:path";
 
+import { readSettings } from "./util/settings";
 import devtools from "./devtools";
 import ipc from "./ipc";
 import csp from "./csp";
@@ -42,6 +43,8 @@ class BrowserWindow extends electron.BrowserWindow {
             return;
         }
 
+        const settings = readSettings();
+
         const originalPreload = options.webPreferences.preload;
         process.env.AERO_PRELOAD = originalPreload;
 
@@ -54,6 +57,12 @@ class BrowserWindow extends electron.BrowserWindow {
                 nodeIntegration: true,
                 contextIsolation: false,
             },
+            ...(settings.vibrancy && process.platform === "darwin"
+                ? {
+                      vibrancy: "sidebar",
+                      backgroundColor: "#00000000",
+                  }
+                : {}),
         };
 
         return super(opts) as unknown as BrowserWindow;
