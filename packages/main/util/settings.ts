@@ -16,9 +16,37 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-export const OPEN_SNIPPET_DIRECTORY = "aero:open_snippet_directory";
-export const OPEN_PLUGIN_DIRECTORY = "aero:open_plugin_directory";
-export const OPEN_THEME_DIRECTORY = "aero:open_theme_directory";
-export const OPEN_DATA_DIRECTORY = "aero:open_data_directory";
-export const SAVE_SETTINGS = "aero:save_settings";
-export const OPEN_FILE = "aero:open_file";
+import { app } from "electron";
+
+import { Settings } from "~/renderer/api/settings/useSettings";
+
+import path from "node:path";
+import fs from "node:fs";
+
+export const dataDirectory = path.join(app.getPath("appData"), "aero");
+
+const SETTINGS_FILE = path.join(dataDirectory, "settings.json");
+
+export const readSettings = (): Partial<Settings> => {
+    try {
+        return JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf-8"));
+    } catch {
+        return {};
+    }
+};
+
+export const updateSettings = (newPair: {
+    [key in keyof Settings]: Settings[key];
+}) => {
+    fs.writeFileSync(
+        SETTINGS_FILE,
+        JSON.stringify(
+            {
+                ...readSettings(),
+                ...newPair,
+            },
+            null,
+            4
+        )
+    );
+};

@@ -16,6 +16,8 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { c } from "~/renderer/util/classes";
+
 import "./alert.scss";
 
 export default (props: {
@@ -25,7 +27,7 @@ export default (props: {
     type: "brand" | "danger" | "warning" | "success";
 }) => {
     return (
-        <div className={`alert alert-${props.type} ${props.className || ""}`}>
+        <div className={c("alert", `alert-${props.type}`, props.className)}>
             <div className="header">{props.header}</div>
             <div className="details">{props.details}</div>
         </div>

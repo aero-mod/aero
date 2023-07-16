@@ -1,0 +1,56 @@
+name: Bug report
+description: File a bug report
+title: "bug: "
+labels:
+    - bug
+    - triage
+assignees:
+    - TheCommieAxolotl
+body:
+    - type: checkboxes
+      id: duplicate
+      attributes:
+          label: Checks
+          options:
+              - label: I have checked this is not a duplicate issue.
+                required: true
+              - label: I have checked and this issue is replicable.
+                required: true
+    - type: dropdown
+      id: channel
+      attributes:
+          label: Aero Channel
+          options:
+              - Stable
+              - Preview
+              - Development
+    - type: input
+      id: version
+      attributes:
+          label: Aero Version
+          placeholder: 1.x.x
+      validations:
+          required: true
+    - type: textarea
+      id: issue
+      attributes:
+          label: Actual Behaviour
+          description: What actually happened?
+          placeholder: discord died
+      validations:
+          required: true
+    - type: textarea
+      id: expected
+      attributes:
+          label: Expected Behaviour
+          description: What did you think was going to happen?
+          placeholder: discord alived
+    - type: textarea
+      id: logs
+      attributes:
+          label: Logs/Errors
+          description: Any output logs or console messages relevant to the issue.
+          placeholder: |
+              Uncaught TypeError: Cannot read properties of undefined (reading 'aero')
+              at Object.<anonymous> (aero:renderer:1:1)
+          render: shell

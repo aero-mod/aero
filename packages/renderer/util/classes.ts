@@ -42,3 +42,26 @@ export const Margin = {
         4: "mr-4",
     },
 };
+
+export const c = (...names: (string | string[] | Record<string, boolean>)[]): string => {
+    const classNames = new Set<string>();
+
+    for (const name of names) {
+        switch (typeof name) {
+            case "string":
+                classNames.add(name);
+                break;
+            case "object":
+                if (Array.isArray(name)) {
+                    name.forEach((n) => classNames.add(n));
+                } else {
+                    for (const [key, value] of Object.entries(name)) {
+                        if (value) classNames.add(key);
+                    }
+                }
+                break;
+        }
+    }
+
+    return [...classNames].join(" ");
+};

@@ -18,19 +18,19 @@
 
 import type { BrowserWindowConstructorOptions } from "electron";
 
-import devtools, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 import electron from "electron";
 
 import path from "node:path";
 
+import { readSettings } from "./util/settings";
+import devtools from "./devtools";
 import ipc from "./ipc";
 import csp from "./csp";
 
 electron.app.commandLine.appendSwitch("no-force-async-hooks-checks");
 
 electron.app.on("ready", () => {
-    devtools(REACT_DEVELOPER_TOOLS);
-
+    devtools();
     ipc();
     csp();
 });
@@ -42,6 +42,8 @@ class BrowserWindow extends electron.BrowserWindow {
 
             return;
         }
+
+        const settings = readSettings();
 
         const originalPreload = options.webPreferences.preload;
         process.env.AERO_PRELOAD = originalPreload;
@@ -55,6 +57,12 @@ class BrowserWindow extends electron.BrowserWindow {
                 nodeIntegration: true,
                 contextIsolation: false,
             },
+            ...(settings.vibrancy && process.platform === "darwin"
+                ? {
+                      vibrancy: "sidebar",
+                      backgroundColor: "#00000000",
+                  }
+                : {}),
         };
 
         return super(opts) as unknown as BrowserWindow;

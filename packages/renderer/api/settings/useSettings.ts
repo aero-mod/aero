@@ -25,6 +25,7 @@ export interface Settings {
     debugLogs: boolean;
     loadThirdParty: boolean;
     themeURLS: string;
+    vibrancy: boolean;
     enabledAddons: {
         themes: {
             [key: string]: boolean;

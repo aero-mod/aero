@@ -18,6 +18,7 @@
 
 import { LayerActions } from "../webpack/common/actions";
 import markdown from "~/renderer/util/markdown";
+import { c } from "~/renderer/util/classes";
 import { getModule } from "../webpack";
 
 import CloseButton from "~/renderer/ui/components/Modal/CloseButton";
@@ -28,7 +29,7 @@ import "./index.scss";
 
 export const openDocumentationPageWithString = (content: string) => {
     LayerActions.pushLayer(() => (
-        <div className={`docs-page ${getModule(["markup"]).markup}`}>
+        <div className={c("docs-page", getModule(["markup"]).markup)}>
             <div className="absolute-close-button">
                 <CloseButton onClick={() => LayerActions.popLayer()} />
             </div>

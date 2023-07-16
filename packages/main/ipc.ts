@@ -22,8 +22,9 @@ import path from "node:path";
 import fs from "node:fs";
 
 import * as ipc from "~/common/ipc";
+import { updateSettings } from "./util/settings";
 
-const dataDirectory = path.join(app.getPath("appData"), "aero");
+export const dataDirectory = path.join(app.getPath("appData"), "aero");
 
 process.env.DATA_PATH = dataDirectory;
 
@@ -32,6 +33,8 @@ if (!fs.existsSync(path.join(dataDirectory, "snippets"))) fs.mkdirSync(path.join
 if (!fs.existsSync(path.join(dataDirectory, "plugins"))) fs.mkdirSync(path.join(dataDirectory, "plugins"));
 if (!fs.existsSync(path.join(dataDirectory, "themes"))) fs.mkdirSync(path.join(dataDirectory, "themes"));
 if (!fs.existsSync(path.join(dataDirectory, "data"))) fs.mkdirSync(path.join(dataDirectory, "data"));
+if (!fs.existsSync(path.join(dataDirectory, "settings.json")))
+    fs.writeFileSync(path.join(dataDirectory, "settings.json"), "{}");
 
 export default () => {
     ipcMain.handle(ipc.OPEN_SNIPPET_DIRECTORY, () => {
@@ -54,5 +57,9 @@ export default () => {
         if (p.includes("..")) return;
 
         shell.openPath(path.join(dataDirectory, p));
+    });
+                   
+    ipcMain.handle(ipc.SAVE_SETTINGS, (_, pair) => {
+        updateSettings(pair);
     });
 };

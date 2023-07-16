@@ -18,12 +18,14 @@
 
 import { localStorage } from "~/renderer/util/polyfill";
 import type { Settings } from "./useSettings";
+import { SAVE_SETTINGS } from "~/common/ipc";
 
 const listeners = new Set<[(settings: Settings) => void, keyof Settings]>();
 
 let settings: Settings = {
     debugLogs: false,
     loadThirdParty: true,
+    vibrancy: false,
     themeURLS: "",
     enabledAddons: {
         themes: {},
@@ -87,6 +89,8 @@ export const proxy = new Proxy(settings, {
         });
 
         Reflect.set(_target, key, value);
+
+        window.aeroNative.ipc.invoke(SAVE_SETTINGS, settings);
 
         return true;
     },

@@ -18,6 +18,8 @@
 
 import type { ReactNode } from "react";
 
+import { c } from "~/renderer/util/classes";
+
 export { default as ModalCloseButton } from "./CloseButton";
 
 import "./index.scss";
@@ -43,7 +45,7 @@ export const ModalRoot = (props: ModalRootProps) => {
     };
 
     return (
-        <div {...e} className={`modal-root size-${props.size}`}>
+        <div {...e} className={c("modal-root", `size-${props.size}`)}>
             {props.children}
         </div>
     );
@@ -55,14 +57,19 @@ export const ModalHeader = (props: {
     separator?: boolean;
 }) => {
     return (
-        <div className={`modal-header ${props.separator ? "separator" : ""} ${props.center ? "center" : ""}`}>
+        <div
+            className={c("modal-header", {
+                center: props.center,
+                separator: props.separator,
+            })}
+        >
             {props.children}
         </div>
     );
 };
 
 export const ModalContent = (props: { className?: string; children: JSX.Element | JSX.Element[] | ReactNode }) => {
-    return <div className={`modal-content ${props.className ?? ""}`}>{props.children}</div>;
+    return <div className={c("modal-content", props.className)}>{props.children}</div>;
 };
 
 export const ModalFooter = (props: {
@@ -73,9 +80,11 @@ export const ModalFooter = (props: {
 }) => {
     return (
         <div
-            className={`modal-footer ${props.gap ? "gap" : ""} ${props.center ? "center" : ""} ${
-                props.transparent ? "transparent" : ""
-            }`}
+            className={c("modal-footer", {
+                transparent: props.transparent,
+                center: props.center,
+                gap: props.gap,
+            })}
         >
             {props.children}
         </div>

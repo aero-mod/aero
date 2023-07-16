@@ -16,9 +16,26 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-export const OPEN_SNIPPET_DIRECTORY = "aero:open_snippet_directory";
-export const OPEN_PLUGIN_DIRECTORY = "aero:open_plugin_directory";
-export const OPEN_THEME_DIRECTORY = "aero:open_theme_directory";
-export const OPEN_DATA_DIRECTORY = "aero:open_data_directory";
-export const SAVE_SETTINGS = "aero:save_settings";
-export const OPEN_FILE = "aero:open_file";
+import https from "node:https";
+
+const httpOptions = {
+    headers: {
+        "User-Agent": "Aero (https://github.com/aero-mod/aero)",
+    },
+};
+
+export const get = (url: string): Promise<Buffer> => {
+    return new Promise((resolve, reject) => {
+        https
+            .get(url, httpOptions, (res) => {
+                if (res.statusCode > 399) return reject(res.statusMessage);
+
+                const chunks: Buffer[] = [];
+
+                res.on("error", reject);
+                res.on("data", (chunk) => chunks.push(chunk));
+                res.on("end", () => resolve(Buffer.concat(chunks)));
+            })
+            .on("error", reject);
+    });
+};
