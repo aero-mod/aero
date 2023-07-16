@@ -77,7 +77,7 @@ export const useSnippets = (): [
                 return true;
             },
             deleteProperty(_, prop: string) {
-                fs.unlink(`/snippets/${prop}`);
+                fs.unlinkFile(`/snippets/${prop}`);
 
                 if (isStyle(prop)) reapply(prop);
 

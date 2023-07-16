@@ -22,13 +22,21 @@ import path from "node:path";
 import fs from "node:fs";
 
 export class FileSystem {
-    basePath: string;
-    tree: Directory;
+    #tree: Directory;
+    #basePath: string;
+
+    get basePath() {
+        return this.#basePath;
+    }
+
+    get tree() {
+        return this.#tree;
+    }
 
     constructor(basePath: string) {
-        this.basePath = basePath;
+        this.#basePath = basePath;
 
-        this.tree = this.buildTree(basePath);
+        this.#tree = this.#buildTree(basePath);
 
         this.attachListener(basePath);
     }
@@ -39,264 +47,223 @@ export class FileSystem {
         });
     }
 
-    buildTree(basePath: string): Directory {
-        const files = fs.readdirSync(basePath, { withFileTypes: true });
+    #buildTree(basePath: string): Directory {
+        const nodes = fs.readdirSync(basePath, { withFileTypes: true });
 
         const tree: Directory = {
             type: "directory",
             relativePath: "/",
             absolutePath: basePath,
-            files: [],
-            directories: [],
+            files: {},
+            directories: {},
             name: basePath.split("/").pop(),
         };
 
-        for (const file of files) {
-            if (file.isFile()) {
-                const content = fs.readFileSync(`${basePath}/${file.name}`, "utf8");
-
-                tree.files.push({
-                    type: "file",
-                    relativePath: `/${file.name}`,
-                    absolutePath: `${basePath}/${file.name}`,
-                    content,
-                    filename: file.name,
-                    extension: file.name.split(".").pop(),
-                });
-            } else if (file.isDirectory()) {
-                tree.directories.push(this.buildTree(path.join(basePath, file.name)));
-            }
+        for (const node of nodes) {
+            tree[node.isFile() ? "files" : "directories"][node.name] = node.isFile()
+                ? {
+                      type: "file",
+                      relativePath: `/${node.name}`,
+                      absolutePath: `${basePath}/${node.name}`,
+                      content: fs.readFileSync(`${basePath}/${node.name}`, "utf8"),
+                      filename: node.name,
+                      extension: node.name.split(".").pop(),
+                  }
+                : this.#buildTree(path.join(basePath, node.name));
         }
 
         return tree;
     }
 
-    getFile(relativePath: string): File | undefined {
-        const pathParts = relativePath
-            .split("/")
-            .filter((p) => p !== "")
-            .slice(0, -1);
+    #walkPath(relativePath: string | string[], createDirs?: boolean): Directory | undefined {
+        if (!Array.isArray(relativePath)) relativePath = relativePath.split("/").filter((p) => p !== "");
 
-        let currentDirectory = this.tree;
+        let currentDirectory = this.#tree;
 
-        for (const part of pathParts) {
-            const directory = currentDirectory.directories.find((d) => d.name === part);
+        for (const part of relativePath) {
+            if (!currentDirectory.directories[part]) {
+                if (!createDirs) return undefined;
 
-            if (!directory) return undefined;
-
-            currentDirectory = directory;
-        }
-
-        const file = currentDirectory.files.find((f) => f.filename === relativePath.split("/").pop());
-
-        if (!file) return undefined;
-
-        return file;
-    }
-
-    deleteFile(relativePath: string) {
-        const pathParts = relativePath
-            .split("/")
-            .filter((p) => p !== "")
-            .slice(0, -1);
-
-        let currentDirectory = this.tree;
-
-        for (const part of pathParts) {
-            const directory = currentDirectory.directories.find((d) => d.name === part);
-
-            if (!directory) return false;
-
-            currentDirectory = directory;
-        }
-
-        const fileIndex = currentDirectory.files.findIndex((f) => f.filename === relativePath.split("/").pop());
-
-        if (fileIndex === -1) return false;
-
-        currentDirectory.files.splice(fileIndex, 1);
-
-        fs.unlinkSync(path.join(currentDirectory.absolutePath, relativePath.split("/").pop()));
-
-        return true;
-    }
-
-    writeFile(relativePath: string, content: string) {
-        const existingFile = this.getFile(relativePath);
-
-        if (existingFile) {
-            existingFile.content = content;
-
-            fs.writeFileSync(existingFile.absolutePath, content);
-
-            return true;
-        }
-
-        const pathParts = relativePath
-            .split("/")
-            .filter((p) => p !== "")
-            .slice(0, -1);
-
-        let currentDirectory = this.tree;
-
-        for (const part of pathParts) {
-            const directory = currentDirectory.directories.find((d) => d.name === part);
-
-            if (!directory) {
-                currentDirectory.directories.push({
+                currentDirectory.directories[part] = {
                     type: "directory",
-                    relativePath: `${currentDirectory.relativePath}/${part}`,
+                    relativePath: path.join(currentDirectory.relativePath, part),
                     absolutePath: path.join(currentDirectory.absolutePath, part),
-                    files: [],
-                    directories: [],
+                    files: {},
+                    directories: {},
                     name: part,
-                });
+                };
 
-                fs.mkdirSync(path.join(currentDirectory.absolutePath, part));
-
-                currentDirectory = currentDirectory.directories[currentDirectory.directories.length - 1];
-            } else {
-                currentDirectory = directory;
+                fs.mkdirSync(currentDirectory.absolutePath);
             }
+            currentDirectory = currentDirectory.directories[part];
         }
-
-        const filename = relativePath.split("/").pop();
-
-        const newFile: File = {
-            type: "file",
-            relativePath,
-            absolutePath: path.join(currentDirectory.absolutePath, filename),
-            content,
-            filename,
-            extension: filename.split(".").pop(),
-        };
-
-        currentDirectory.files.push(newFile);
-
-        fs.writeFileSync(newFile.absolutePath, content);
-    }
-
-    getDirectory(relativePath: string): Directory | undefined {
-        const pathParts = relativePath.split("/").filter((p) => p !== "");
-
-        let currentDirectory = this.tree;
-
-        for (const part of pathParts) {
-            const directory = currentDirectory.directories.find((d) => d.name === part);
-
-            if (!directory) return undefined;
-
-            currentDirectory = directory;
-        }
-
         return currentDirectory;
     }
 
-    createDirectory(relativePath: string) {
-        const existingDirectory = this.getDirectory(relativePath);
+    getFile(relativePath: string): File | undefined {
+        const split = relativePath.split("/").filter((p) => p !== ""),
+            filename = split.pop();
+        return this.#walkPath(split)?.files[filename];
+    }
 
-        if (existingDirectory) return false;
+    getDirectory(relativePath: string): Directory | undefined {
+        return this.#walkPath(relativePath);
+    }
 
-        const pathParts = relativePath
-            .split("/")
-            .filter((p) => p !== "")
-            .slice(0, -1);
+    writeFile(relativePath: string, content: string) {
+        const split = relativePath.split("/").filter((p) => p !== ""),
+            filename = split.pop();
 
-        let currentDirectory = this.tree;
-
-        for (const part of pathParts) {
-            const directory = currentDirectory.directories.find((d) => d.name === part);
-
-            if (!directory) {
-                currentDirectory.directories.push({
-                    type: "directory",
-                    relativePath: `${currentDirectory.relativePath}/${part}`,
-                    absolutePath: path.join(currentDirectory.absolutePath, part),
-                    files: [],
-                    directories: [],
-                    name: part,
-                });
-
-                currentDirectory = currentDirectory.directories[currentDirectory.directories.length - 1];
-            } else {
-                currentDirectory = directory;
-            }
+        const dir = this.#walkPath(split, true);
+        if (dir.files[filename]) {
+            dir.files[filename].content = content;
+        } else {
+            dir.files[filename] = {
+                type: "file",
+                relativePath,
+                absolutePath: path.join(dir.absolutePath, filename),
+                content,
+                filename,
+                extension: filename.split(".").pop(),
+            };
         }
 
-        const name = relativePath.split("/").pop();
+        fs.writeFileSync(dir.files[filename].absolutePath, content);
+    }
 
-        const newDirectory: Directory = {
-            type: "directory",
-            relativePath,
-            absolutePath: path.join(currentDirectory.absolutePath, name),
-            files: [],
-            directories: [],
-            name,
-        };
+    createDirectory(relativePath: string) {
+        this.#walkPath(relativePath, true);
+    }
 
-        currentDirectory.directories.push(newDirectory);
+    exists(relativePath: string) {
+        const split = relativePath.split("/").filter((p) => p !== ""),
+            name = split.pop(),
+            dir = this.#walkPath(split);
+        if (!dir) return false;
+        return !!dir.files[name] || !!dir.directories[name];
+    }
 
-        fs.mkdirSync(newDirectory.absolutePath);
+    isFile(relativePath: string) {
+        return !!this.getFile(relativePath);
+    }
 
-        return true;
+    isDirectory(relativePath: string) {
+        return !!this.getDirectory(relativePath);
+    }
+
+    unlink(relativePath: string, isFile: boolean) {
+        const split = relativePath.split("/").filter((p) => p !== ""),
+            name = split.pop();
+
+        const sub = this.#walkPath(split)?.[isFile ? "files" : "directories"];
+        if (!sub || !sub[name]) return;
+        fs.unlinkSync(sub[name].absolutePath);
+        delete sub[name];
     }
 }
 
+function checkValidPath(path: string) {
+    if (path.includes("../")) throw new Error(`Invalid path: ${path}`);
+    if (path.includes("..\\")) throw new Error(`Invalid path: ${path}`);
+}
+
 export const makeFs = (fileSystem: FileSystem) => {
+    function isFile(path: string) {
+        checkValidPath(path);
+        return fileSystem.isFile(path);
+    }
+
+    function readFile(path: string) {
+        checkValidPath(path);
+        const file = fileSystem.getFile(path);
+
+        if (!file) throw new Error(`File not found: ${path}`);
+
+        return file.content;
+    }
+
+    function writeFile(path: string, content: string) {
+        checkValidPath(path);
+        return fileSystem.writeFile(path, content);
+    }
+
+    function unlinkFile(path: string) {
+        checkValidPath(path);
+        return fileSystem.unlink(path, true);
+    }
+
+    function readdir(path: string, withFileTypes: true): { name: string; isFile: boolean }[];
+    function readdir(path: string, withFileTypes?: false | undefined): string[];
+    function readdir(
+        path: string,
+        withFileTypes?: boolean | undefined
+    ): string[] | { name: string; isFile: boolean }[] {
+        checkValidPath(path);
+        const dir = fileSystem.getDirectory(path);
+
+        if (!dir) throw new Error(`Directory not found: ${path}`);
+
+        return withFileTypes ? Object.keys(dir.files).map((name) => ({ name, isFile: true })) : Object.keys(dir.files);
+    }
+
+    function subdirs(path: string) {
+        checkValidPath(path);
+        const dir = fileSystem.getDirectory(path);
+
+        if (!dir) throw new Error(`Directory not found: ${path}`);
+
+        return Object.keys(dir.directories);
+    }
+
+    function getFiles(path: string) {
+        checkValidPath(path);
+        const dir = fileSystem.getDirectory(path);
+
+        if (!dir) throw new Error(`Directory not found: ${path}`);
+
+        return Object.keys(dir.files);
+    }
+
+    function mkdir(path: string) {
+        checkValidPath(path);
+
+        return fileSystem.createDirectory(path);
+    }
+
+    function unlinkDir(path: string) {
+        checkValidPath(path);
+        return fileSystem.unlink(path, false);
+    }
+
+    function exists(path: string) {
+        checkValidPath(path);
+        return fileSystem.exists(path);
+    }
+
+    function resolveToAbsolute(relativePath: string) {
+        // we can assume that we want the leading slash to be removed
+
+        return path.resolve(fileSystem.basePath, relativePath.startsWith("/") ? relativePath.slice(1) : relativePath);
+    }
+
     return {
-        readFile: (path: string) => {
-            const file = fileSystem.getFile(path);
+        exists,
+        isFile,
 
-            if (!file) throw new Error(`File not found: ${path}`);
+        getFiles,
+        readFile,
+        writeFile,
+        unlinkFile,
 
-            return file.content;
-        },
-        readdir: (path: string) => {
-            const directory = fileSystem.getDirectory(path);
+        subdirs,
+        readdir,
+        mkdir,
+        unlinkDir,
 
-            if (!directory) throw new Error(`Directory not found: ${path}`);
-
-            return [...directory.files.map((f) => f.filename), ...directory.directories.map((d) => d.name)];
-        },
-        mkdir: (path: string) => {
-            if (path.includes("../")) throw new Error(`Invalid path: ${path}`);
-            if (path.includes("..\\")) throw new Error(`Invalid path: ${path}`);
-
-            return fileSystem.createDirectory(path);
-        },
-        writeFile: (path: string, content: string) => {
-            if (path.includes("../")) throw new Error(`Invalid path: ${path}`);
-            if (path.includes("..\\")) throw new Error(`Invalid path: ${path}`);
-
-            return fileSystem.writeFile(path, content);
-        },
-        unlink: (path: string) => {
-            if (path.includes("../")) throw new Error(`Invalid path: ${path}`);
-            if (path.includes("..\\")) throw new Error(`Invalid path: ${path}`);
-
-            return fileSystem.deleteFile(path);
-        },
-        exists: (path: string) => {
-            const file = fileSystem.getFile(path);
-            const directory = fileSystem.getDirectory(path);
-
-            return !!file || !!directory;
-        },
         path: {
-            extname: (path: string) => {
-                return path.split(".").pop();
-            },
-            join: (...paths: string[]) => {
-                return path.join(...paths);
-            },
-            resolveToAbsolute: (relativePath: string) => {
-                // we can assume that we want the leading slash to be removed
-
-                return path.resolve(
-                    fileSystem.basePath,
-                    relativePath.startsWith("/") ? relativePath.slice(1) : relativePath
-                );
-            },
+            join: path.join,
+            extname: path.extname,
+            resolveToAbsolute,
         },
     };
 };

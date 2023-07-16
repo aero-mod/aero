@@ -83,7 +83,7 @@ export default () => {
                 {snippets()._files.length ? (
                     <>
                         <div className="monaco-header">
-                            <div className="monaco-header-lang">{fs.path.extname(section)}</div>
+                            <div className="monaco-header-lang">{fs.path.extname(section).replace(".", "")}</div>
                             {isScript(section) && (
                                 <PanelButton
                                     tooltipText="Run"

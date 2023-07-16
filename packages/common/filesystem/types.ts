@@ -29,7 +29,11 @@ export type Directory = {
     type: "directory";
     relativePath: string;
     absolutePath: string;
-    files: File[];
-    directories: Directory[];
+    files: {
+        [filename: string]: File;
+    };
+    directories: {
+        [dirname: string]: Directory;
+    };
     name: string;
 };
