@@ -48,7 +48,7 @@ export default (plugin: AeroPlugin) => {
 
     return (
         <>
-            {plugin.settings.map((s) => (
+            {plugin.settings?.map((s) => (
                 <Item setting={s} settings={settings} />
             ))}
         </>

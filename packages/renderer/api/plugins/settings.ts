@@ -30,12 +30,12 @@ export const pluginSettings = (pluginID: string) => {
 
                 const storage = localStorage.getItem(`aero:plugin:${pluginID}`);
 
-                if (!storage) return plugin.settings.find((setting) => setting.id === key)?.initialValue ?? null;
+                if (!storage) return plugin.settings?.find((setting) => setting.id === key)?.initialValue ?? null;
 
                 const parsed = JSON.parse(storage);
 
                 if (parsed[key] === undefined)
-                    return plugin.settings.find((setting) => setting.id === key)?.initialValue ?? null;
+                    return plugin.settings?.find((setting) => setting.id === key)?.initialValue ?? null;
 
                 return parsed[key];
             },
