@@ -34,7 +34,7 @@ waitFor(["useState"], false).then((md) => {
 waitFor(["useSpring"], false).then(async (md) => {
     ReactSpring = md;
 
-    while (!window.aero.notifications._initialiseToasts) {
+    while (!window.aero?.notifications) {
         await sleep(1);
     }
 
