@@ -16,11 +16,12 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { User } from "discord-types/general";
+import { Message, User } from "discord-types/general";
 
 import { PartialUser, ProfileBadge, _getProfileBadges } from "../attachments/badges";
 import { AgentPlugin, SettingsItemType } from "./types";
 import { OPEN_SNIPPET_DIRECTORY } from "~/common/ipc";
+import { UserStore } from "../webpack/common/stores";
 import { showModal } from "../notifications";
 import { pluginSettings } from "./settings";
 import { patch } from "../patcher/menu";
@@ -435,6 +436,34 @@ export const loadingText: AgentPlugin = {
                           window.aeroNative.channel !== "production" ? ` (${window.aeroNative.channel})` : ""
                       }"`
                     : "$1",
+            },
+        },
+    ],
+};
+
+export const utilityAttributes: AgentPlugin = {
+    color: "var(--aero-brand)",
+    builtin: true,
+    id: "aero_utilityAttributes",
+    name: "Utility Attributes",
+    description: "Adds utility attributes to certain elements (Some themes require this plugin enabled).",
+    author: {
+        name: "TheCommieAxolotl",
+        id: "538487970408300544",
+    },
+    self: {
+        isAuthor(e: { message: Message }) {
+            return e.message.author.id === UserStore.getCurrentUser().id;
+        },
+    },
+    patches: [
+        {
+            find: '.THREAD_STARTER_MESSAGE,"Message',
+            replacement: {
+                match: /"aria-roledescription":.{1,2}\.Z\.Messages\.MESSAGE_A11Y_ROLE_DESCRIPTION,/,
+                replace: (match) => {
+                    return match + '"data-is-author-self": $self.isAuthor(e),';
+                },
             },
         },
     ],
