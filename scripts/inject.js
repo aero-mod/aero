@@ -27,6 +27,8 @@ import fs from "node:fs";
 import { banner, getAppPath } from "./common.js";
 import { uninject } from "./uninject.js";
 
+const safify = (str) => str.replace(/\\/g, "\\\\").replace("\\C:", "C:");
+
 const channel = process.argv[2] ?? "stable";
 
 const inject = async () => {
@@ -60,7 +62,9 @@ const inject = async () => {
 
     await fs.promises.writeFile(
         path.join(patchedPath, "index.js"),
-        `module.exports = require("${newAsarPath}");\n\nrequire("${path.join(process.cwd(), "dist/main.js")}")`
+        `module.exports = require("${safify(newAsarPath)}");\n\nrequire("${safify(
+            path.join(process.cwd(), "dist/main.js")
+        )}")`
     );
     await fs.promises.writeFile(
         path.join(patchedPath, "package.json"),
