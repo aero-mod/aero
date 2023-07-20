@@ -16,13 +16,19 @@ import fs from "fs";
 
 const dirname = path.dirname(new URL(import.meta.url).pathname);
 
-if (!fs.existsSync(path.join(dirname, "dist", "package.json"))) {
-    if (!fs.existsSync(path.join(dirname, "dist"))) {
-        fs.mkdirSync(path.join(dirname, "dist"));
+let dist = path.join(dirname, "dist");
+
+if (process.platform === "win32") {
+    dist = dist.replace(/^\\/g, "");
+}
+
+if (!fs.existsSync(path.join(dist, "package.json"))) {
+    if (!fs.existsSync(dist)) {
+        fs.mkdirSync(dist);
     }
 
     fs.writeFileSync(
-        path.join(dirname, "dist", "package.json"),
+        path.join(dist, "package.json"),
         JSON.stringify({
             module: "commonjs",
             main: "./main.js",

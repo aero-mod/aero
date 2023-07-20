@@ -66,7 +66,21 @@ export const getAppPath = async (channel) => {
 
     for (const appPath of appPaths) {
         if (fs.existsSync(appPath)) {
-            return appPath;
+            let p = appPath;
+
+            if (process.platform === "win32") {
+                const files = fs.readdirSync(p);
+
+                const appDir = files.find((f) => f.startsWith("app-"));
+
+                if (appDir) {
+                    p = path.join(p, appDir, "resources");
+                }
+
+                p = p.replace(/^\\/g, "");
+            }
+
+            return p;
         }
     }
 
