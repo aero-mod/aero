@@ -54,8 +54,6 @@ class BrowserWindow extends electron.BrowserWindow {
                 ...options.webPreferences,
                 preload: path.join(__dirname, "preload.js"),
                 devTools: true,
-                nodeIntegration: true,
-                contextIsolation: false,
             },
             ...(settings.vibrancy && process.platform === "darwin"
                 ? {

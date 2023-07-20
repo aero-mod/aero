@@ -18,19 +18,20 @@
 
 import { session } from "electron";
 
-// TODO: don't nuke CSP
+const external = ["https://esm.sh", "https://cdn.skypack.dev", "https://unpkg.com"];
+
 export default () => {
-    session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-        const headers = Object.keys(details.responseHeaders);
+    session.defaultSession.webRequest.onHeadersReceived((event, cb) => {
+        const key = Object.keys(event.responseHeaders).find((key) => key.toLowerCase() === "content-security-policy");
 
-        for (let h = 0; h < headers.length; h++) {
-            const key = headers[h];
+        if (!key) return cb({ cancel: false, responseHeaders: event.responseHeaders });
 
-            if (key.toLowerCase().indexOf("content-security-policy") !== 0) continue;
+        event.responseHeaders[key] = [
+            `default-src * 'unsafe-inline' data: blob:; script-src ${external.join(
+                " "
+            )} 'self' 'unsafe-inline' 'unsafe-eval';`,
+        ];
 
-            delete details.responseHeaders[key];
-        }
-
-        callback({ cancel: false, responseHeaders: details.responseHeaders });
+        cb({ cancel: false, responseHeaders: event.responseHeaders });
     });
 };
