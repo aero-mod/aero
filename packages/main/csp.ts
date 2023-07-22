@@ -18,7 +18,7 @@
 
 import { session } from "electron";
 
-const external = ["https://esm.sh", "https://cdn.skypack.dev", "https://unpkg.com"];
+const external = ["https://esm.sh", "https://unpkg.com", "https://cdn.jsdelivr.net"];
 
 export default () => {
     session.defaultSession.webRequest.onHeadersReceived((event, cb) => {
