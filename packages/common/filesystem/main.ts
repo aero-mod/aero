@@ -19,7 +19,7 @@
 import { Directory, File } from "./types";
 
 import path from "node:path";
-import fs from "node:fs";
+import fs from "original-fs";
 
 export class FileSystem {
     #tree: Directory;
