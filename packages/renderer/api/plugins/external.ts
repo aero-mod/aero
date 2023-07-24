@@ -17,6 +17,7 @@
  */
 
 import { originalConsole } from "~/renderer/util/polyfill";
+import logger from "~/common/logger";
 
 const fs = window.aeroNative.fileSystem;
 
@@ -43,9 +44,13 @@ return exports;
 `.trim()
     );
 
-    const res = fn(window.require, {}, {}, originalConsole);
+    try {
+        const res = fn(window.require, {}, {}, originalConsole);
 
-    return res?.default || res;
+        return res?.default || res;
+    } catch (e) {
+        logger.error("Failed to run javascript-like expression: ", e);
+    }
 };
 
 export const loadExternalPlugins = () => {
