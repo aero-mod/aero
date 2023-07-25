@@ -1,5 +1,3 @@
-<!-- TODO: confirm aeromod.dev url -->
-
 # Contributing to Aero
 
 Before we get into it, thanks for taking the time to contribute! 🎉
@@ -22,11 +20,11 @@ The following is a set of guidelines for contributing to Aero and its packages, 
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Aero Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to Staff at [The Aero Discord Server](https://aeromod.dev/discord).
+This project and everyone participating in it is governed by the [Aero Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to Staff at [The Aero Discord Server](https://aero.icu/discord).
 
 ## I don't want to read this whole thing I just have a question(!!!)
 
-That's fine, I don't want to read this whole thing either. Just [open an issue](https://github.com/aero-mod/aero/issues) or [join the Discord server](https://aeromod.dev/discord) and ask away. (Please make sure it's not a duplicate of an existing issue!!)
+That's fine, I don't want to read this whole thing either. Just [open an issue](https://github.com/aero-mod/aero/issues) or [join the Discord server](https://aero.icu/discord) and ask away. (Please make sure it's not a duplicate of an existing issue!!)
 
 ## Architecture
 
