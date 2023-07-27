@@ -21,7 +21,9 @@ import { ToastProps, registry, toastSetter } from "~/renderer/ui/components/Toas
 import { ModalSize, ModalRoot } from "~/renderer/ui/components/Modal";
 import Generic from "./Generic";
 
-export const showReloadDialog = () => {
+import { RELAUNCH } from "~/common/ipc";
+
+export const showReloadDialog = (relaunch?: boolean) => {
     _MEGA_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.openModal((props: { onClose: () => void; [key: string]: unknown }) => (
         <_MEGA_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Dialog
             className="focus-lock"
@@ -34,6 +36,10 @@ export const showReloadDialog = () => {
                     "A plugin or setting you just enabled requires a reload to take effect.\nWould you like to reload now or do it yourself later?"
                 }
                 onConfirm={() => {
+                    if (relaunch) {
+                        window.aeroNative.ipc.invoke(RELAUNCH);
+                    }
+
                     window.location.reload();
                 }}
                 confirmText="Reload"

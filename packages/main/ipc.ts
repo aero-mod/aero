@@ -58,8 +58,13 @@ export default () => {
 
         shell.openPath(path.join(dataDirectory, p));
     });
-                   
+
     ipcMain.handle(ipc.SAVE_SETTINGS, (_, pair) => {
         updateSettings(pair);
+    });
+
+    ipcMain.handle(ipc.RELAUNCH, () => {
+        app.relaunch();
+        app.exit();
     });
 };

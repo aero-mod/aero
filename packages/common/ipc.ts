@@ -22,3 +22,4 @@ export const OPEN_THEME_DIRECTORY = "aero:open_theme_directory";
 export const OPEN_DATA_DIRECTORY = "aero:open_data_directory";
 export const SAVE_SETTINGS = "aero:save_settings";
 export const OPEN_FILE = "aero:open_file";
+export const RELAUNCH = "aero:relaunch";

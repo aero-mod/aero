@@ -167,7 +167,7 @@ export default () => {
                     onChange={(value) => {
                         setSettings({ vibrancy: value });
 
-                        showReloadDialog();
+                        showReloadDialog(true);
                     }}
                     title="Under-Window Vibrancy"
                     note={"Adds vibrancy to the window.\nThis is only available on macOS."}
