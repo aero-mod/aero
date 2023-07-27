@@ -70,6 +70,9 @@ class BrowserWindow extends electron.BrowserWindow {
     }
 }
 
+// Make sure that discord loads this, thanks ven
+Object.defineProperty(BrowserWindow, "name", { value: "BrowserWindow" });
+
 const electronPath = require.resolve("electron");
 delete require.cache[electronPath]?.exports;
 require.cache[electronPath].exports = {
