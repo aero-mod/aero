@@ -60,6 +60,7 @@ class BrowserWindow extends electron.BrowserWindow {
             ...(settings.vibrancy && process.platform === "darwin"
                 ? {
                       vibrancy: "sidebar",
+                      transparent: true,
                       backgroundColor: "#00000000",
                   }
                 : {}),
