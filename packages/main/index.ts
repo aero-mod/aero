@@ -52,7 +52,9 @@ class BrowserWindow extends electron.BrowserWindow {
             ...options,
             webPreferences: {
                 ...options.webPreferences,
-                preload: path.join(__dirname, "preload.js"),
+                preload: originalPreload.includes("discord_desktop_core")
+                    ? path.join(__dirname, "preload.js")
+                    : originalPreload,
                 devTools: true,
             },
             ...(settings.vibrancy && process.platform === "darwin"
