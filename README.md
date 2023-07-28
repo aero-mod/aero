@@ -1,4 +1,10 @@
 <div align="center">
+    <a href="https://discord.gg/5DbMYB34Fz">
+        <img src="https://img.shields.io/badge/Join_the_Discord-blue?style=for-the-badge&color=%235965F2" />
+    </a>
+</div>
+
+<div align="center">
     <img src="./assets/Transparent.png" width="150px" height="150px" alt="Aero Logo" />
     <h1>Aero</h1>
     A next-generation Discord mod empowering users and developers alike.
