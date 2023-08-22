@@ -62,9 +62,9 @@ const inject = async () => {
 
     await fs.promises.writeFile(
         path.join(patchedPath, "index.js"),
-        `module.exports = require("${safify(newAsarPath)}");\n\nrequire("${safify(
-            path.join(process.cwd(), "dist/main.js")
-        )}")`
+        `require("${safify(path.join(process.cwd(), "dist/main.js"))}")\n\nmodule.exports = require("${safify(
+            newAsarPath
+        )}");`
     );
     await fs.promises.writeFile(
         path.join(patchedPath, "package.json"),
