@@ -35,6 +35,7 @@ type RequireResult<T extends string> = "aero" extends T
     ? typeof import("~/renderer/aero").default
     : "aero/plugin" extends T
     ? {
+          remoteImport: typeof import("~/renderer/api/plugins/import").remoteImport;
           definePlugin: typeof import("~/renderer/api/plugins/types").definePlugin;
           defineVencordPlugin: typeof import("~/renderer/api/plugins/types").defineVencordPlugin;
           SettingsItemType: typeof import("~/renderer/api/plugins/types").SettingsItemType;

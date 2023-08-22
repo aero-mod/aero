@@ -19,7 +19,7 @@
 import { globalPromise } from "./api/webpack";
 
 import { definePlugin, defineVencordPlugin, SettingsItemType } from "./api/plugins/types";
-import plugins, { injectBuiltin, pluginSettings } from "./api/plugins";
+import plugins, { injectBuiltin, pluginSettings, remoteImport } from "./api/plugins";
 import polyfill, { localStorage } from "./util/polyfill";
 import * as badges from "./api/attachments/badges";
 import { defineTheme } from "./api/themes/types";
@@ -57,6 +57,7 @@ window.require = (id: string) => {
             return badges;
         case "aero/plugin":
             return {
+                remoteImport,
                 definePlugin,
                 defineVencordPlugin,
                 pluginSettings,

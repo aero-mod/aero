@@ -16,28 +16,11 @@
  * along with Aero. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { loadExternalPlugins } from "./external";
-export { pluginSettings } from "./settings";
-import { startPlugin } from "./actions";
-import * as builtin from "./builtin";
+// allows plugins to dynamically import modules without the typescript compiler abstracting it away
+export const remoteImport = async <T>(url: string): Promise<T> => {
+    if (!url.startsWith("https://")) throw new Error("Dynamicly imported URL must start with https://");
 
-export * from "./registry";
-export * from "./import";
+    const response = await import(url);
 
-import { registerPlugin } from "./registry";
-
-export default async () => {
-    const external = loadExternalPlugins();
-
-    for (const plugin of external) {
-        registerPlugin(plugin);
-    }
-};
-
-export const injectBuiltin = () => {
-    for (const plugin of Object.values(builtin)) {
-        registerPlugin(plugin);
-
-        startPlugin(plugin);
-    }
+    return response;
 };
