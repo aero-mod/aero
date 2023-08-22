@@ -1,6 +1,6 @@
 {
     "name": "aero",
-    "version": "0.0.4",
+    "version": "1.0.0",
     "description": "A next-generation Discord mod empowering users and developers alike.",
     "type": "module",
     "license": "GPL-3.0-or-later",
