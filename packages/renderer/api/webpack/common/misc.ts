@@ -27,6 +27,6 @@ waitFor(["subscribe", "dispatch", "register"]).then((md) => {
     Dispatcher = md;
 });
 
-waitFor(["highlight"]).then((md) => {
+waitFor(["highlight", "getLanguage"]).then((md) => {
     hljs = md;
 });
