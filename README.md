@@ -23,7 +23,7 @@ Clone this repo to your machine:
 $ git clone https://github.com/aero-mod/aero aero
 ```
 
-Install deps and build it locally
+Install dependencies and build locally
 ```bash
 $ pnpm i
 $ pnpm build
