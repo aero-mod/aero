@@ -25,6 +25,8 @@ import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
 
+export const channels = ["stable", "canary", "ptb"];
+
 export const known = {
     darwin: {
         stable: ["/Applications/Discord.app/Contents/Resources/"],
@@ -65,7 +67,7 @@ export const getAppPath = async (channel) => {
     const appPaths = known[process.platform]?.[channel] ?? [];
 
     for (const appPath of appPaths) {
-        if (fs.existsSync(appPath)) {
+        if (fs.statSync(appPath).isDirectory()) {
             let p = appPath;
 
             if (process.platform === "win32") {

@@ -24,15 +24,21 @@ import process from "node:process";
 import path from "node:path";
 import fs from "node:fs";
 
-import { banner, getAppPath } from "./common.js";
+import { banner, channels, getAppPath } from "./common.js";
 import { uninject } from "./uninject.js";
 
 const safify = (str) => str.replace(/\\/g, "\\\\").replace("\\C:", "C:");
 
-const channel = process.argv[2] ?? "stable";
+let channel = "<unknown>";
+let customPath = null;
+if (channels.includes(process.argv[2])) {
+    channel = process.argv[2];
+} else {
+    customPath = process.argv[2];
+}
 
 const inject = async () => {
-    const appPath = await getAppPath(channel);
+    const appPath = customPath ?? await getAppPath(channel);
 
     console.log("");
 
