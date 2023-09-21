@@ -29,9 +29,9 @@ $ pnpm i
 $ pnpm build
 ```
 
-Inject into discord
+Inject into Discord
 ```bash
-$ pnpm inject <channel>
+$ pnpm inject <channel or path>
 ```
 
 Tada! 🎉
