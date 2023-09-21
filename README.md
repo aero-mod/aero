@@ -29,10 +29,11 @@ $ pnpm i
 $ pnpm build
 ```
 
-Inject into discord
+Inject into Discord
 ```bash
 $ pnpm inject <channel>
 ```
+Use the `DISCORD_INSTALLATION` environment variable to override the automatically detected path.
 
 Tada! 🎉
 

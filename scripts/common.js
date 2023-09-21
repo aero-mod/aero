@@ -62,10 +62,27 @@ export const known = {
 };
 
 export const getAppPath = async (channel) => {
-    const appPaths = known[process.platform]?.[channel] ?? [];
+    const pathOverride = process.env.DISCORD_INSTALLATION;
+
+    if (pathOverride) {
+        if (fs.statSync(pathOverride).isDirectory()) {
+            const resources = path.join(pathOverride, "resources");
+
+            // use the resources directory if present
+            if (path.basename(pathOverride) !== "resources" && fs.statSync(resources).isDirectory()) {
+                return resources;
+            }
+
+            return pathOverride;
+        } else {
+            console.warn(`Could not find the directory at '${pathOverride}'.`);
+        }
+    }
+
+    const appPaths = known[process.platform]?.[channel];
 
     for (const appPath of appPaths) {
-        if (fs.existsSync(appPath)) {
+        if (fs.statSync(appPath).isDirectory()) {
             let p = appPath;
 
             if (process.platform === "win32") {
@@ -84,7 +101,7 @@ export const getAppPath = async (channel) => {
         }
     }
 
-    throw new Error(`Could not find Discord ${channel} installation.`);
+    throw new Error(`Could not find Discord ${channel} installation. You can set the path yourself with the DISCORD_INSTALLATION environment variable.`);
 };
 
 export const banner = (name) => {
