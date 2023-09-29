@@ -54,7 +54,7 @@ export default defineConfig([
             json(),
             isProduction && terser(),
         ].filter(Boolean),
-        external: ["electron"],
+        external: ["electron", "original-fs"],
     },
     {
         input: "packages/preload/index.ts",
@@ -83,7 +83,7 @@ export default defineConfig([
             }),
             isProduction && terser(),
         ].filter(Boolean),
-        external: ["electron"],
+        external: ["electron", "original-fs"],
     },
     {
         input: "packages/renderer/index.ts",
@@ -122,6 +122,6 @@ export default defineConfig([
             typescript(),
             isProduction && terser(),
         ].filter(Boolean),
-        external: ["electron", "react"],
+        external: ["electron", "react", "original-fs"],
     },
 ]);
