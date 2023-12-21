@@ -76,6 +76,8 @@ window.require = (id: string) => {
     }
 };
 
+window.require.all = ["aero", "aero/dom", "aero/badges", "aero/plugin", "aero/webpack", "aero/theme", "aero/ui"];
+
 const initialise = async () => {
     window.DiscordNative?.window.setDevtoolsCallbacks((_) => _);
 

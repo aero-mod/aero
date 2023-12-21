@@ -63,7 +63,9 @@ declare global {
          *
          * *Do not use this explicitly*
          */
-        require: <I extends InternalModule>(id: I) => RequireResult<I>;
+        require: (<I extends InternalModule>(id: I) => RequireResult<I>) & {
+            all: InternalModule[];
+        };
         webpackChunkdiscord_app: any;
         DiscordNative: any;
 
