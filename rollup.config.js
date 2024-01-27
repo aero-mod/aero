@@ -16,7 +16,7 @@ import fs from "fs";
 
 const dirname = path.dirname(new URL(import.meta.url).pathname);
 
-let dist = path.join(dirname, "dist");
+let dist = path.join(dirname, "dist").replaceAll("%20", "");
 
 if (process.platform === "win32") {
     dist = dist.replace(/^\\/g, "");
